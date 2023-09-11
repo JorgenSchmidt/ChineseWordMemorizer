@@ -1,0 +1,12 @@
+D:\codes\C#\ChineseWordMemorizer\AppCore\bin\Debug\net7.0\AppCore.deps.json
+D:\codes\C#\ChineseWordMemorizer\AppCore\bin\Debug\net7.0\AppCore.dll
+D:\codes\C#\ChineseWordMemorizer\AppCore\bin\Debug\net7.0\AppCore.pdb
+D:\codes\C#\ChineseWordMemorizer\AppCore\obj\Debug\net7.0\AppCore.csproj.AssemblyReference.cache
+D:\codes\C#\ChineseWordMemorizer\AppCore\obj\Debug\net7.0\AppCore.GeneratedMSBuildEditorConfig.editorconfig
+D:\codes\C#\ChineseWordMemorizer\AppCore\obj\Debug\net7.0\AppCore.AssemblyInfoInputs.cache
+D:\codes\C#\ChineseWordMemorizer\AppCore\obj\Debug\net7.0\AppCore.AssemblyInfo.cs
+D:\codes\C#\ChineseWordMemorizer\AppCore\obj\Debug\net7.0\AppCore.csproj.CoreCompileInputs.cache
+D:\codes\C#\ChineseWordMemorizer\AppCore\obj\Debug\net7.0\AppCore.dll
+D:\codes\C#\ChineseWordMemorizer\AppCore\obj\Debug\net7.0\refint\AppCore.dll
+D:\codes\C#\ChineseWordMemorizer\AppCore\obj\Debug\net7.0\AppCore.pdb
+D:\codes\C#\ChineseWordMemorizer\AppCore\obj\Debug\net7.0\ref\AppCore.dll

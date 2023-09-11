@@ -1,0 +1,202 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\codes\\C#\\ChineseWordMemorizer\\CWM_Tests\\CWM_Tests.csproj": {}
+  },
+  "projects": {
+    "D:\\codes\\C#\\ChineseWordMemorizer\\AppCore\\AppCore.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\codes\\C#\\ChineseWordMemorizer\\AppCore\\AppCore.csproj",
+        "projectName": "AppCore",
+        "projectPath": "D:\\codes\\C#\\ChineseWordMemorizer\\AppCore\\AppCore.csproj",
+        "packagesPath": "C:\\Users\\Joe\\.nuget\\packages\\",
+        "outputPath": "D:\\codes\\C#\\ChineseWordMemorizer\\AppCore\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Joe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\codes\\C#\\ChineseWordMemorizer\\AppModel\\AppModel.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\codes\\C#\\ChineseWordMemorizer\\AppModel\\AppModel.csproj",
+        "projectName": "AppModel",
+        "projectPath": "D:\\codes\\C#\\ChineseWordMemorizer\\AppModel\\AppModel.csproj",
+        "packagesPath": "C:\\Users\\Joe\\.nuget\\packages\\",
+        "outputPath": "D:\\codes\\C#\\ChineseWordMemorizer\\AppModel\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Joe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "D:\\codes\\C#\\ChineseWordMemorizer\\AppCore\\AppCore.csproj": {
+                "projectPath": "D:\\codes\\C#\\ChineseWordMemorizer\\AppCore\\AppCore.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\codes\\C#\\ChineseWordMemorizer\\CWM_Tests\\CWM_Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\codes\\C#\\ChineseWordMemorizer\\CWM_Tests\\CWM_Tests.csproj",
+        "projectName": "CWM_Tests",
+        "projectPath": "D:\\codes\\C#\\ChineseWordMemorizer\\CWM_Tests\\CWM_Tests.csproj",
+        "packagesPath": "C:\\Users\\Joe\\.nuget\\packages\\",
+        "outputPath": "D:\\codes\\C#\\ChineseWordMemorizer\\CWM_Tests\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Joe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "D:\\codes\\C#\\ChineseWordMemorizer\\AppCore\\AppCore.csproj": {
+                "projectPath": "D:\\codes\\C#\\ChineseWordMemorizer\\AppCore\\AppCore.csproj"
+              },
+              "D:\\codes\\C#\\ChineseWordMemorizer\\AppModel\\AppModel.csproj": {
+                "projectPath": "D:\\codes\\C#\\ChineseWordMemorizer\\AppModel\\AppModel.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "MSTest.TestAdapter": {
+              "target": "Package",
+              "version": "[2.2.10, )"
+            },
+            "MSTest.TestFramework": {
+              "target": "Package",
+              "version": "[2.2.10, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.3.2, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

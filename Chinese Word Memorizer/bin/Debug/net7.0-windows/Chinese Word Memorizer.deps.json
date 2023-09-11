@@ -1,0 +1,50 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "Chinese Word Memorizer/1.0.0": {
+        "dependencies": {
+          "AppCore": "1.0.0",
+          "AppModel": "1.0.0"
+        },
+        "runtime": {
+          "Chinese Word Memorizer.dll": {}
+        }
+      },
+      "AppCore/1.0.0": {
+        "runtime": {
+          "AppCore.dll": {}
+        }
+      },
+      "AppModel/1.0.0": {
+        "dependencies": {
+          "AppCore": "1.0.0"
+        },
+        "runtime": {
+          "AppModel.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Chinese Word Memorizer/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AppCore/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AppModel/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

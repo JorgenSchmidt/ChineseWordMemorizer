@@ -1,0 +1,31 @@
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\bin\Debug\net7.0-windows\Chinese Word Memorizer.exe
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\bin\Debug\net7.0-windows\Chinese Word Memorizer.deps.json
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\bin\Debug\net7.0-windows\Chinese Word Memorizer.runtimeconfig.json
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\bin\Debug\net7.0-windows\Chinese Word Memorizer.dll
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\bin\Debug\net7.0-windows\Chinese Word Memorizer.pdb
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Chinese Word Memorizer.csproj.AssemblyReference.cache
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Views\AppWindow.g.cs
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\App.g.cs
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Chinese Word Memorizer_MarkupCompile.cache
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Chinese Word Memorizer_MarkupCompile.lref
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Views\AppWindow.baml
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Chinese Word Memorizer.g.resources
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Chinese Word Memorizer.GeneratedMSBuildEditorConfig.editorconfig
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Chinese Word Memorizer.AssemblyInfoInputs.cache
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Chinese Word Memorizer.AssemblyInfo.cs
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Chinese Word Memorizer.csproj.CoreCompileInputs.cache
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Chinese Word Memorizer.dll
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\refint\Chinese Word Memorizer.dll
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Chinese Word Memorizer.pdb
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Chinese Word Memorizer.genruntimeconfig.cache
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\ref\Chinese Word Memorizer.dll
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\GeneratedInternalTypeHelper.g.cs
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\bin\Debug\net7.0-windows\AppCore.dll
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\bin\Debug\net7.0-windows\AppModel.dll
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\bin\Debug\net7.0-windows\AppCore.pdb
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\bin\Debug\net7.0-windows\AppModel.pdb
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Chinese Word Memorizer.csproj.CopyComplete
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Views\HSK_Windows\HSK_DialogWindow.g.cs
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Views\HSK_Windows\HSK_DictionaryDialogWindow.g.cs
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Views\HSK_Windows\HSK_DictionaryDialogWindow.baml
+D:\codes\C#\ChineseWordMemorizer\Chinese Word Memorizer\obj\Debug\net7.0-windows\Views\HSK_Windows\HSK_DialogWindow.baml

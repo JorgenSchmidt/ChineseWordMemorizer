@@ -1,0 +1,44 @@
+﻿<Window x:Class="Chinese_Word_Memorizer.Views.HSK_Windows.HSK_DialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Chinese_Word_Memorizer.ViewModels.HSK_ViewModels"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle= "None"
+        Title="HSK (Диалоговое окно)" Height="530" Width="490" ResizeMode="NoResize" BorderThickness="1" BorderBrush="Black">
+    <Window.DataContext>
+        <local:HSK_DialogWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <!-- Блок ввода имени файла -->
+        <Label Margin="10,20,0,0" Height="30" Width="400" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Название файла с пользовательскими словами (без расширения):" />
+        <TextBox Text="{Binding FileName}" Margin="10,50,0,0" Height="30" Width="450" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+        <!-- Блок тестирования -->
+        <Label Content="{Binding MainTestWord}" Margin="10,115,0,0" Height="55" Width="450" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30" HorizontalContentAlignment="Center" BorderBrush="#333" BorderThickness="4" />
+        <Label Content="{Binding LeftTestWordLabel}" Margin="10,190,0,0" Height="27" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="1" />
+        <TextBox Text="{Binding LeftTestWordText}" IsEnabled="{Binding LeftTestWordTextIsEnabled}" Margin="10,230,0,0" Height="30" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20"/>
+        <Label Content="{Binding RightTestWordLabel}" Margin="260,190,0,0" Height="27" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="1" />
+        <TextBox Text="{Binding RightTestWordText}" IsEnabled="{Binding RightTestWordTextIsEnabled}" Margin="260,230,0,0" Height="30" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20"/>
+        <Button Command="{Binding CheckAnswer}" IsEnabled="{Binding ConfirmButtonIsEnabled}" Margin="0,280,0,0"  Height="30" Width="130" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Ответить"/>
+
+        <!-- Блок переключения режимов тестирования -->
+        <Button Command="{Binding ToRussianMode}" IsEnabled="{Binding RussianModeButtonIsEnabled}" Margin="10,350,0,0"  Height="50" Width="130" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock TextAlignment="Center" FontSize="10"> Переключить на режим <LineBreak/> проверки знания <LineBreak/> перевода русских слов </TextBlock>
+        </Button>
+        <Button Command="{Binding ToChineseMode}" IsEnabled="{Binding ChineseModeButtonIsEnabled}" Margin="170,350,0,0"  Height="50" Width="130" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock TextAlignment="Center" FontSize="10"> Переключить на режим <LineBreak/> проверки знания <LineBreak/> перевода китайских слов </TextBlock>
+        </Button>
+        <Button Command="{Binding ToPinyinMode}" IsEnabled="{Binding PinyinModeButtonIsEnabled}" Margin="330,350,0,0"  Height="50" Width="130" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock TextAlignment="Center" FontSize="10"> Переключить на режим <LineBreak/> проверки знания 拼音 </TextBlock>
+        </Button>
+
+        <!-- Блок основных операций -->
+        <Button Command="{Binding ShowDictionary}" IsEnabled="{Binding ShowDictIsEnabled}" Margin="10,430,0,0"  Height="30" Width="220" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Показать словарь в отдельном окне"/>
+        <Button Command="{Binding GetInfo}" Margin="10,470,0,0"  Height="30" Width="220" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Получить инструкцию"/>
+        <Button Command="{Binding InitiatingButton}" Content="{Binding InitiatingButtonContent}" Margin="250,430,0,0"  Height="70" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" />
+        <Button Command="{Binding CloseWindow}" Margin="360,430,0,0"  Height="70" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Закрыть окно"/>
+    </Grid>
+</Window>

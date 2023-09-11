@@ -1,0 +1,18 @@
+﻿<Window x:Class="Chinese_Word_Memorizer.Views.HSK_Windows.HSK_DictionaryDialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Chinese_Word_Memorizer.ViewModels.HSK_ViewModels"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle= "None"
+        Title="HSK (Диалоговое окно)" Height="550" Width="790" ResizeMode="NoResize" BorderThickness="1" BorderBrush="Black">
+    <Window.DataContext>
+        <local:HSK_DictionaryDialogWindow/>
+    </Window.DataContext>
+    <Grid>
+        <TextBox Text="{Binding ViewDictionary}" IsReadOnly="True" Margin="10,20,0,0" Height="450" Width="750" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20"  />
+        <Button Command="{Binding Close}"  Margin="0,490,0,0"  Height="30" Width="130" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Закрыть"/>
+    </Grid>
+</Window>

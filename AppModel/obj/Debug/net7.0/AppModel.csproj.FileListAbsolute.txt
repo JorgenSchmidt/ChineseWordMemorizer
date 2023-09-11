@@ -1,0 +1,15 @@
+D:\codes\C#\ChineseWordMemorizer\AppModel\bin\Debug\net7.0\AppModel.deps.json
+D:\codes\C#\ChineseWordMemorizer\AppModel\bin\Debug\net7.0\AppModel.dll
+D:\codes\C#\ChineseWordMemorizer\AppModel\bin\Debug\net7.0\AppModel.pdb
+D:\codes\C#\ChineseWordMemorizer\AppModel\bin\Debug\net7.0\AppCore.dll
+D:\codes\C#\ChineseWordMemorizer\AppModel\bin\Debug\net7.0\AppCore.pdb
+D:\codes\C#\ChineseWordMemorizer\AppModel\obj\Debug\net7.0\AppModel.csproj.AssemblyReference.cache
+D:\codes\C#\ChineseWordMemorizer\AppModel\obj\Debug\net7.0\AppModel.GeneratedMSBuildEditorConfig.editorconfig
+D:\codes\C#\ChineseWordMemorizer\AppModel\obj\Debug\net7.0\AppModel.AssemblyInfoInputs.cache
+D:\codes\C#\ChineseWordMemorizer\AppModel\obj\Debug\net7.0\AppModel.AssemblyInfo.cs
+D:\codes\C#\ChineseWordMemorizer\AppModel\obj\Debug\net7.0\AppModel.csproj.CoreCompileInputs.cache
+D:\codes\C#\ChineseWordMemorizer\AppModel\obj\Debug\net7.0\AppModel.csproj.CopyComplete
+D:\codes\C#\ChineseWordMemorizer\AppModel\obj\Debug\net7.0\AppModel.dll
+D:\codes\C#\ChineseWordMemorizer\AppModel\obj\Debug\net7.0\refint\AppModel.dll
+D:\codes\C#\ChineseWordMemorizer\AppModel\obj\Debug\net7.0\AppModel.pdb
+D:\codes\C#\ChineseWordMemorizer\AppModel\obj\Debug\net7.0\ref\AppModel.dll
