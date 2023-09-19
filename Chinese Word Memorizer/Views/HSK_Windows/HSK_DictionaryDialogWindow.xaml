@@ -12,7 +12,15 @@
         <local:HSK_DictionaryDialogWindow/>
     </Window.DataContext>
     <Grid>
-        <TextBox Text="{Binding ViewDictionary}" IsReadOnly="True" Margin="10,20,0,0" Height="450" Width="750" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20"  />
+        <ListView ItemsSource="{Binding ViewDictionary}" Margin="10,20,0,0" Height="450" Width="750" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Китайское слово" Width="150" DisplayMemberBinding="{Binding ChineseWord}" />
+                    <GridViewColumn Header="Пиньинь" Width="150" DisplayMemberBinding="{Binding PinyinString}"/>
+                    <GridViewColumn Header="Русское слово" Width="400" DisplayMemberBinding="{Binding RussianWord}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
         <Button Command="{Binding Close}"  Margin="0,490,0,0"  Height="30" Width="130" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Закрыть"/>
     </Grid>
 </Window>

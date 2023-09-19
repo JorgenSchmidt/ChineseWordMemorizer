@@ -1,5 +1,7 @@
 ﻿using AppCore.Entities;
 using AppCore.Responses;
+using AppModel.ChekerService;
+using AppModel.ConverterService;
 using AppModel.DictionaryService;
 using AppModel.ValidateService;
 using Chinese_Word_Memorizer.AppService;
@@ -9,15 +11,23 @@ using System.Windows;
 
 namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
 {
+    /// <summary>
+    /// Модель визуального представления для окна тестирования пользователя на знание лексики к выбранному уровню HSK.
+    /// </summary>
     public class HSK_DialogWindowViewModel : NotifyPropertyChanged
     {
         #region Локальные переменные (окна)
+        // Локальная переменная, которая содержит в себе словарь тестирования
         private OutputListData<DictionaryElement> CurrentWindowWordsListObject = new OutputListData<DictionaryElement>();
+        // Локальная переменная, отвечающая за переключение режимов тестирования
         private SwitchModes CurrentSwitchMode;
+        // Локальная переменная, отвечающая за номер текущего элемента, по которому пользователю нужно дать ответ
         private int CurrentWordNumber;
         #endregion
 
         #region Вспомогательные методы
+        // Отвечает за показ контента в элементе, который ассоциирован со словом, которому необходимо дать соответствующий перевод/транскрипцию 
+        // в зависимости от включённого пользователем режима тестирования
         private void GetContentForTestLabels (string RussianWord, string ChineseWord, string Pinyin)
         {
             try
@@ -29,7 +39,10 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                     break;
 
                     case SwitchModes.ChineseMode:
-                        MainTestWord = ChineseWord;
+
+                        var changedChineseWord = StringGetterWithDicts.GetChangeStringByDefaultList(ChineseWord, RussianWord, AppData.CurrentAppDictionary);
+
+                        MainTestWord = changedChineseWord;
                     break;
 
                     case SwitchModes.PinyinMode:
@@ -43,6 +56,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
             }
         }
 
+        // Скрипт, переключающий состояние элементов окна в дефолтный режим
         private void FinishTesting ()
         {
             TestingWasStarted = false;
@@ -66,6 +80,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
         #endregion
 
         #region Блок ввода имени файла
+        // Имя файла (задаётся относительнный путь)
         public string? fileName;
         public string? FileName
         {
@@ -79,6 +94,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
         #endregion
 
         #region Блок тестирования
+        // Ассоциирован с label элементом, содержит слово, по которому нужно дать ответ
         public string? mainTestWord; // вмещается 26 символов
         public string? MainTestWord
         {
@@ -90,6 +106,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
             }
         }
 
+        // Ассоциирован с первым тестировочным label элементом, отображает на экране что нужно ввести в соответствующий textbox
         public string? leftTestWordLabel = "Китайское слово:";
         public string? LeftTestWordLabel
         {
@@ -101,6 +118,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
             }
         }
 
+        // Ассоциирован с первым тестировочным textbox'ом, в который необходимо ввести ответ
         public string? leftTestWordText;
         public string? LeftTestWordText
         {
@@ -112,6 +130,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
             }
         }
 
+        // Ассоциирован с параметром IsEnabled первого textbox'a, отвечает за то, будет ли активирован textbox
         public bool leftTestWordTextIsEnabled = false;
         public bool LeftTestWordTextIsEnabled
         {
@@ -123,6 +142,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
             }
         }
 
+        // Ассоциирован со вторым тестировочным label элементом, отображает на экране что нужно ввести в соответствующий textbox
         public string? rightTestWordLabel = "Пиньинь:";
         public string? RightTestWordLabel
         {
@@ -134,6 +154,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
             }
         }
 
+        // Ассоциирован со вторым тестировочным textbox'ом, в который необходимо ввести ответ
         public string? rightTestWordText;
         public string? RightTestWordText
         {
@@ -145,6 +166,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
             }
         }
 
+        // Ассоциирован с параметром IsEnabled второго textbox'a, отвечает за то, будет ли активирован textbox
         public bool rightTestWordTextIsEnabled = false;
         public bool RightTestWordTextIsEnabled
         {
@@ -156,6 +178,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
             }
         }
 
+        // Отвечает за то, будет ли активирована кнопка ответа
         public bool confirmButtonIsEnabled = false;
         public bool ConfirmButtonIsEnabled
         {
@@ -166,6 +189,8 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 CheckChanges();
             }
         }
+
+        // Скрипт, выполняющийся при зажатии кнопки ответа
         public Command CheckAnswer
         {
             get
@@ -173,14 +198,26 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 return new Command(
                     obj =>
                     {
+                        // Инициализация специальных переменных
                         var leftword = "";
                         var rightword = "";
+
+                        // Проверка на то, какой режим тестирования включен, выполнение соответствующего скрипта
                         switch (CurrentSwitchMode)
                         {
+
+                            // Режим тестирования по ассоциации с русским словом
                             case SwitchModes.RussianMode:
+                                // Присваиваем специальной "левой" переменной значение соответствующего словарю слова
                                 leftword = CurrentWindowWordsListObject.Data[CurrentWordNumber].ChineseWord;
+                                // Присваиваем специальной "правой" переменной значение соответствующего словарю слова
                                 rightword = CurrentWindowWordsListObject.Data[CurrentWordNumber].PinyinString;
-                                if (leftword.Equals(LeftTestWordText) && rightword.Equals(RightTestWordText))
+
+                                // Сравниваем полученные слова с введённым пользователем контентом
+                                if (
+                                           (leftword.Equals(LeftTestWordText) && rightword.Equals(RightTestWordText))
+                                        || (leftword.Equals(LeftTestWordText) && (PinyinConverters.StandartPinyinToLocalPinyin(rightword)).Equals(RightTestWordText))
+                                   )
                                 {
                                     MessageBox.Show("Верно!");
                                 }
@@ -193,10 +230,20 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                                 }
                             break;
 
+                            // Режим тестирования по ассоциации с китайским словом
                             case SwitchModes.ChineseMode:
+                                
+                                // Присваиваем специальной "левой" переменной значение соответствующего словарю слова
                                 leftword = CurrentWindowWordsListObject.Data[CurrentWordNumber].RussianWord;
+                                
+                                // Присваиваем специальной "правой" переменной значение соответствующего словарю слова
                                 rightword = CurrentWindowWordsListObject.Data[CurrentWordNumber].PinyinString;
-                                if (leftword.Equals(LeftTestWordText) && rightword.Equals(RightTestWordText))
+
+                                // Сравниваем полученные слова с введённым пользователем контентом
+                                if (
+                                           (RussianCheckService.CheckAnswer(LeftTestWordText, leftword) && rightword.Equals(RightTestWordText))
+                                        || (RussianCheckService.CheckAnswer(LeftTestWordText, leftword) && (PinyinConverters.StandartPinyinToLocalPinyin(rightword)).Equals(RightTestWordText))
+                                   )
                                 {
                                     MessageBox.Show("Верно!");
                                 }
@@ -209,10 +256,17 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                                 }
                             break;
 
-                            case SwitchModes.PinyinMode: 
+                            // Режим тестирования по ассоциации с транскрипицей 拼音
+                            case SwitchModes.PinyinMode:
+                                
+                                // Присваиваем специальной "левой" переменной значение соответствующего словарю слова
                                 leftword = CurrentWindowWordsListObject.Data[CurrentWordNumber].ChineseWord;
+
+                                // Присваиваем специальной "правой" переменной значение соответствующего словарю слова
                                 rightword = CurrentWindowWordsListObject.Data[CurrentWordNumber].RussianWord;
-                                if (leftword.Equals(LeftTestWordText) && rightword.Equals(RightTestWordText))
+
+                                // Сравниваем полученные слова с введённым пользователем контентом
+                                if (leftword.Equals(LeftTestWordText) && RussianCheckService.CheckAnswer(RightTestWordText, rightword))
                                 {
                                     MessageBox.Show("Верно!");
                                 }
@@ -225,10 +279,16 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                                 }
                             break;
                         }
+
+                        // Обнуление контента локальных переменных, ассоциированных с соответствующим textbox'ом
                         LeftTestWordText = "";
                         RightTestWordText = "";
+                        // Удаление элемента, по которому был дан ответ пользователем
                         CurrentWindowWordsListObject.Data.RemoveAt(CurrentWordNumber);
 
+                        // Проверка на то, остались ли ещё элементы в словаре тестирования
+                        // Если элементы остались, переменная, отвечающая за номер текущего элемента тестирования перезадаётся
+                        // В противном случае выдаётся сообщение об окончании тестирования и запускается скрипт перехода текущего окна к дефолтному состояниюы
                         if (CurrentWindowWordsListObject.Data.Count != 0)
                         {
                             Random randObj = new Random();
@@ -251,6 +311,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
         #endregion
 
         #region Блок переключения режимов тестирования
+        // Отвечает за активацию ассоциированной с переменной кнопки
         public bool russianModeButtonIsEnabled = false;
         public bool RussianModeButtonIsEnabled
         {
@@ -261,6 +322,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 CheckChanges();
             }
         }
+        // Запускает скрипт переключения по нажатии на ассоциированную кнопку
         public Command ToRussianMode
         {
             get
@@ -279,6 +341,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
             }
         }
 
+        // Отвечает за активацию ассоциированной с переменной кнопки
         public bool chineseModeButtonIsEnabled = true;
         public bool ChineseModeButtonIsEnabled
         {
@@ -289,6 +352,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 CheckChanges();
             }
         }
+        // Запускает скрипт переключения по нажатии на ассоциированную кнопку
         public Command ToChineseMode
         {
             get
@@ -307,6 +371,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
             }
         }
 
+        // Отвечает за активацию ассоциированной с переменной кнопки
         public bool pinyinModeButtonIsEnabled = true;
         public bool PinyinModeButtonIsEnabled
         {
@@ -317,6 +382,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 CheckChanges();
             }
         }
+        // Запускает скрипт переключения по нажатии на ассоциированную кнопку
         public Command ToPinyinMode
         {
             get
@@ -337,6 +403,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
         #endregion
 
         #region Блок основных операций
+        // Отвечает за активацию кнопки, по нажатию которой открывается словарь
         public bool showDictIsEnabled = true;
         public bool ShowDictIsEnabled
         {
@@ -347,6 +414,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 CheckChanges();
             }
         }
+        // Скрипт запуска окна просмотра элементов словаря HSK
         public Command ShowDictionary
         {
             get
@@ -364,7 +432,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
             }
         }
 
-        
+        // Скрипт показа messagebox'а с инструкцией по проведению тестирования
         public Command GetInfo
         {
             get
@@ -393,8 +461,10 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
             }
         }
 
+        // Переменная, отвечающая за то, началось ли тестирование
         private bool TestingWasStarted = false;
 
+        // Контент кнопки начала тестирования
         public string? initiatingButtonContent = "Начать!";
         public string? InitiatingButtonContent
         {
@@ -405,6 +475,8 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 CheckChanges();
             }
         }
+
+        // Свойство, ассоциирование с кнопкой, запускающей скрипт начала/окончания тестирования
         public Command InitiatingButton
         {
             get
@@ -481,6 +553,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
             }
         }
 
+        // Скрипт закрытия окна тестирования, дополнительно происходит обнуление глобальной переменной, содержащей весь HSK словарь
         public Command CloseWindow
         {
             get
@@ -488,7 +561,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 return new Command(
                     obj =>
                     {
-                        AppData.CurrentAppDictionary = null;
+                        AppData.CurrentAppDictionary.Clear();
                         WindowsObjects.HSK_DialogWindow.Close();
                         WindowsObjects.HSK_DialogWindow = null;
                     }
@@ -498,6 +571,9 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
         #endregion
     }
 
+    /// <summary>
+    /// Список всех режимов тестирования
+    /// </summary>
     internal enum SwitchModes
     {
         RussianMode,

@@ -4,6 +4,9 @@ using System.Windows;
 
 namespace Chinese_Word_Memorizer.ViewModels
 {
+    /// <summary>
+    /// Модель визуального представления основного окна (происходит выбор )
+    /// </summary>
     public class AppWindowViewModel
     {
         public Command StartHSK1Window
@@ -39,7 +42,18 @@ namespace Chinese_Word_Memorizer.ViewModels
 
                     async (obj) =>
                     {
-                        MessageBox.Show("Не реализовано");
+                        // Открытие файла со словарём и загрузка из него данных в память программы
+                        string fileName = Environment.CurrentDirectory + @"\Dictionaries\hsk2_dict.txt";
+                        HSKDataLogic.Start(fileName);
+
+                        if (AppData.WindowOpeningIsAllow)
+                        {
+                            WindowsObjects.HSK_DialogWindow = new();
+                            if (WindowsObjects.HSK_DialogWindow.ShowDialog() == true)
+                            {
+                                WindowsObjects.HSK_DialogWindow.Show();
+                            }
+                        }
                     }
                 );
             }
@@ -52,7 +66,18 @@ namespace Chinese_Word_Memorizer.ViewModels
 
                     async (obj) =>
                     {
-                        MessageBox.Show("Не реализовано");
+                        // Открытие файла со словарём и загрузка из него данных в память программы
+                        string fileName = Environment.CurrentDirectory + @"\Dictionaries\hsk3_dict.txt";
+                        HSKDataLogic.Start(fileName);
+
+                        if (AppData.WindowOpeningIsAllow)
+                        {
+                            WindowsObjects.HSK_DialogWindow = new();
+                            if (WindowsObjects.HSK_DialogWindow.ShowDialog() == true)
+                            {
+                                WindowsObjects.HSK_DialogWindow.Show();
+                            }
+                        }
                     }
                 );
             }
@@ -65,7 +90,18 @@ namespace Chinese_Word_Memorizer.ViewModels
 
                     async (obj) =>
                     {
-                        MessageBox.Show("Не реализовано");
+                        // Открытие файла со словарём и загрузка из него данных в память программы
+                        string fileName = Environment.CurrentDirectory + @"\Dictionaries\hsk4_dict.txt";
+                        HSKDataLogic.Start(fileName);
+
+                        if (AppData.WindowOpeningIsAllow)
+                        {
+                            WindowsObjects.HSK_DialogWindow = new();
+                            if (WindowsObjects.HSK_DialogWindow.ShowDialog() == true)
+                            {
+                                WindowsObjects.HSK_DialogWindow.Show();
+                            }
+                        }
                     }
                 );
             }
@@ -78,7 +114,18 @@ namespace Chinese_Word_Memorizer.ViewModels
 
                     async (obj) =>
                     {
-                        MessageBox.Show("Не реализовано");
+                        // Открытие файла со словарём и загрузка из него данных в память программы
+                        string fileName = Environment.CurrentDirectory + @"\Dictionaries\hsk5_dict.txt";
+                        HSKDataLogic.Start(fileName);
+
+                        if (AppData.WindowOpeningIsAllow)
+                        {
+                            WindowsObjects.HSK_DialogWindow = new();
+                            if (WindowsObjects.HSK_DialogWindow.ShowDialog() == true)
+                            {
+                                WindowsObjects.HSK_DialogWindow.Show();
+                            }
+                        }
                     }
                 );
             }
@@ -91,7 +138,18 @@ namespace Chinese_Word_Memorizer.ViewModels
 
                     async (obj) =>
                     {
-                        MessageBox.Show("Не реализовано");
+                        // Открытие файла со словарём и загрузка из него данных в память программы
+                        string fileName = Environment.CurrentDirectory + @"\Dictionaries\hsk6_dict.txt";
+                        HSKDataLogic.Start(fileName);
+
+                        if (AppData.WindowOpeningIsAllow)
+                        {
+                            WindowsObjects.HSK_DialogWindow = new();
+                            if (WindowsObjects.HSK_DialogWindow.ShowDialog() == true)
+                            {
+                                WindowsObjects.HSK_DialogWindow.Show();
+                            }
+                        }
                     }
                 );
             }

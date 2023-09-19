@@ -1,12 +1,19 @@
 ﻿using AppCore.Entities;
 using AppCore.Responses;
-using System.Diagnostics.Metrics;
+using AppModel.ConverterService;
 
 namespace AppModel.DictionaryService
 {
+    /// <summary>
+    /// Содержит методы формирования основных словарей: пользовательского словаря, словаря HSK и словаря тестирования.
+    /// </summary>
     public class DictionaryGetter
     {
-        public static OutputListData<DictionaryElement>  GetDictionaryFromFile (string FilePath)
+        /// <summary>
+        /// Метод, ожидающий получить на вход путь до существующего файла и возращающий на выход список элементов словаря HSK, 
+        /// а так же информацию об успешности выполнения метода, успешно ли он был выполнен и сообщение об ошибке если таковая имела место быть.
+        /// </summary>
+        public static OutputListData<DictionaryElement> GetDictionaryFromFile (string FilePath)
         {
             OutputListData<DictionaryElement> answer = new OutputListData<DictionaryElement>();
             answer.Data = new List<DictionaryElement> ();
@@ -24,7 +31,7 @@ namespace AppModel.DictionaryService
                     var curLine = line.Split('\t');
                     if (curLine.Length >= 4)
                     {
-                        throw new Exception("В строке #" + counter + "содержалось 4 или более слов, разделённых табуляцией. Чтение HSK словаря остановлено");
+                        throw new Exception("В строке #" + counter + "содержалось 4 или более слов, разделённых табуляцией. Чтение HSK словаря остановлено.");
                     }
                     answer.Data.Add(new DictionaryElement
                     {
@@ -46,6 +53,10 @@ namespace AppModel.DictionaryService
             return answer;
         }
 
+        /// <summary>
+        /// Метод, ожидающий получить на вход путь до существующего файла и возращающий на выход список пользовательских элементов, 
+        /// а так же информацию об успешности выполнения метода, успешно ли он был выполнен и сообщение об ошибке если таковая имела место быть.
+        /// </summary>
         public static OutputHashSetData<string> GetUserListFromFile(string FilePath)
         {
             OutputHashSetData<string> answer = new OutputHashSetData<string>();
@@ -81,6 +92,10 @@ namespace AppModel.DictionaryService
             return answer;
         }
 
+        /// <summary>
+        /// Метод, которому на вход подаётся непосредственно список элементов пользовательского словаря и список элементов словаря HSK,
+        /// и дающий на выход словарь тестирования, сформированный на основе пользовательского словаря и соответствующих ему данных из словаря HSK.
+        /// </summary>
         public static OutputListData<DictionaryElement> GetElementsByUserList(HashSet<string> InputUserList, List<DictionaryElement> InputTargetList)
         {
             OutputListData<DictionaryElement> answer = new OutputListData<DictionaryElement>();
