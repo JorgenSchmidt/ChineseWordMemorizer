@@ -10,7 +10,7 @@ namespace AppModel.ValidateService
     public class DictionaryValidator
     {
         /// <summary>
-        /// Проверка входного списка на соответствие поставленным требованиям
+        /// Проверка входного словаря HSK на соответствие поставленным требованиям
         /// </summary>
         public static ValideData DictIsCorrect (List<DictionaryElement> dict)
         {

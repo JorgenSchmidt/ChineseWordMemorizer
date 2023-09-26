@@ -17,7 +17,10 @@
             {4, new char[]{ 'à', 'è', 'ì', 'ò', 'ù', 'ǜ' } }
         };
 
-        public readonly static List<string> PinYinInitials = new List<string>()
+        /// <summary>
+        /// Список инициалей китайского языка (нулевой тон)
+        /// </summary>
+        public readonly static List<string> PinYinInitials = new List<string>() // Для будущих изменений логики работы с 拼音 строками (0.0.1.4)
         {
             "b",
             "p",
@@ -44,7 +47,10 @@
             "y",
         };
 
-        public readonly static List<string> PinYinFinals = new List<string>()
+        /// <summary>
+        /// Список финалей китайского языка
+        /// </summary>
+        public readonly static List<string> PinYinFinals = new List<string>() // Для будущих изменений логики работы с 拼音 строками (0.0.1.4)
         {
             "a",
             "e",

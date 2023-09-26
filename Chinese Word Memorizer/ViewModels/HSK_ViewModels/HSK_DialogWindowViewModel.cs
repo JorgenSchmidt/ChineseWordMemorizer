@@ -3,6 +3,7 @@ using AppCore.Responses;
 using AppModel.ChekerService;
 using AppModel.ConverterService;
 using AppModel.DictionaryService;
+using AppModel.DirectoryService;
 using AppModel.ValidateService;
 using Chinese_Word_Memorizer.AppService;
 using System;
@@ -451,11 +452,29 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                         + "следующему принципу (пример будет приближённый, название файлов остаётся на усмотрение пользователя): \n"
                         + "<Номер HSK> - <Номер части>, пример \"hsk1-1\".\n\n"
                         + "3а. Возможно включать различные режимы тестирования: знание русского, китайского перевода, знание 拼音\n"
-                        + "3б. При любом из режимов, необходимо ввести в соответствующие поля элементы, соответствующие выведенному в красной рамке слову\\транскрипции\n\n"
-                        + "4. До начала тестирования приложением предусматривается возможность просмотра выбранного пользователем словарём, после запуска тестирования, "
-                        + "кнопка просмотра словаря будет отключена.";
+                        + "3б. При любом из режимов, необходимо ввести в поля элементы, соответствующие выведенному в зелёной рамке слову\\транскрипции\n"
+                        + "3в. В случае если нет доступа к особым символам, использующихся в транскрипции Пиньинь, можно вводить слова по следующему принципу:\n"
+                        + "после каждой гласной, имеющей тон, необходимо ввести после самой гласной её номер, например zhèngzài --> zhe4ngza4i\n\n"
+                        + "4а. До начала тестирования приложением предусматривается возможность просмотра выбранного пользователем словарём, после запуска тестирования, "
+                        + "кнопка просмотра словаря будет отключена.\n"
+                        + "4б. В окне просмотра словаря можно так же составить список слов для изучения (с обязательным указанием имени выходного файла).";
 
                         MessageBox.Show(Message);
+                    }
+                );
+            }
+        }
+
+        // Позволяет вывести в messagebox'е список файлов из папки WordsLists
+        public Command ShowFileList
+        {
+            get
+            {
+                return new Command(
+                    obj =>
+                    {
+                        var filelist = DirectoryInfoGetters.GetValideFileList(Environment.CurrentDirectory + @"\WordsLists");
+                        MessageBox.Show(filelist);
                     }
                 );
             }
@@ -562,6 +581,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                     obj =>
                     {
                         AppData.CurrentAppDictionary.Clear();
+                        AppData.WindowOpeningIsAllow = false;
                         WindowsObjects.HSK_DialogWindow.Close();
                         WindowsObjects.HSK_DialogWindow = null;
                     }

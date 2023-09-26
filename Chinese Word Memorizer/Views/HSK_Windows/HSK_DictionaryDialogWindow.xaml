@@ -7,20 +7,93 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowStyle= "None"
-        Title="HSK (Диалоговое окно)" Height="550" Width="790" ResizeMode="NoResize" BorderThickness="1" BorderBrush="Black">
+        Title="HSK словарь" Height="760" Width="1000" ResizeMode="NoResize" BorderThickness="1" BorderBrush="Black">
     <Window.DataContext>
         <local:HSK_DictionaryDialogWindow/>
     </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+    </Window.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding ViewDictionary}" Margin="10,20,0,0" Height="450" Width="750" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <!--Строка поиска и отображение словаря-->
+        <Label Content="Поиск слов в словаре:" Margin="22,15,0,0" Height="25" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
+        <TextBox Text="{Binding SearchString}" Margin="25,45,0,0" Height="25" Width="400" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+        <Button Command="{Binding FindWords}" Margin="435,45,0,0"  Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Найти" />
+        <Button Command="{Binding ResetFinded}" Margin="540,45,0,0"  Height="25" Width="130" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Сбросить найденное" />
+        <Button Command="{Binding ChangeVisibleMode}" Margin="725,45,0,0"  Height="25" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Изменить режим отображения словаря" />
+
+        <!--Список-->
+        <ListView ItemsSource="{Binding ViewedDictionary}" Margin="0,90,0,0" Height="450" Width="950" HorizontalAlignment="Center" VerticalAlignment="Top">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Китайское слово" Width="150" DisplayMemberBinding="{Binding ChineseWord}" />
-                    <GridViewColumn Header="Пиньинь" Width="150" DisplayMemberBinding="{Binding PinyinString}"/>
-                    <GridViewColumn Header="Русское слово" Width="400" DisplayMemberBinding="{Binding RussianWord}"/>
+                    <!--Основные поля списка-->
+                    <GridViewColumn Header="Китайское слово" Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ChineseWord}" TextAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Пиньинь" Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding PinyinString}" TextAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Русское слово" Width="400">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding RussianWord}" TextAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Поле выбора элемента (добавление его в список пользовательского словаря)-->
+                    <GridViewColumn Header="Выбрать" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Stretch">
+                                    <CheckBox  x:Name="chkAvg" IsChecked="{Binding IsChoised}" HorizontalAlignment="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Command="{Binding Close}"  Margin="0,490,0,0"  Height="30" Width="130" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Закрыть"/>
+
+        <!--Инструменты словаря (макроструктура)-->
+        <Label Content="Инструменты словаря:" Margin="22,555,0,0" Height="25" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
+        <Rectangle Margin="0,585,0,0" Height="75" Width="950" HorizontalAlignment="Center" VerticalAlignment="Top" Stroke="Black"/>
+        <Rectangle Margin="-650,585,0,0" Height="75" Width="300" HorizontalAlignment="Center" VerticalAlignment="Top" Stroke="Black"/>
+
+        <!--Инструменты словаря (функциональная часть)-->
+        <Label Content="Имя файла:" Margin="40,590,0,0" Height="25" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
+        <TextBox Text="{Binding FileName}" Margin="40,620,0,0" Height="25" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+        <Button Command="{Binding CreateFile}" Margin="-440,600,0,0"  Height="45" Width="60" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock TextAlignment="Center" FontSize="10"> Создать </TextBlock>
+        </Button>
+        <Button Command="{Binding ShowChoisedElements}" Margin="-220,600,0,0"  Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock TextAlignment="Center" FontSize="10"> Показать выбранные <LineBreak/> элементы </TextBlock>
+        </Button>
+        <Button Command="{Binding ResetChoised}" Margin="40,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock TextAlignment="Center" FontSize="10"> Сбросить выбранное <LineBreak/> к изначальному <LineBreak/> состоянию</TextBlock>
+        </Button>
+        <Button Command="" Margin="300,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock TextAlignment="Center" FontSize="10"> Сортировать по 拼音 </TextBlock>
+        </Button>
+        <Button Command="" Margin="560,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock TextAlignment="Center" FontSize="10"> Сортировать по <LineBreak/> русскому алфавиту </TextBlock>
+        </Button>
+        <Button Command="" Margin="820,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock TextAlignment="Center" FontSize="10"> Показать все <LineBreak/> пользовательские <LineBreak/> словари </TextBlock>
+        </Button>
+
+        <!--Другое-->
+        <Button Command="{Binding GetInfo}" Margin="520,700,0,0"  Height="30" Width="130" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Справка"/>
+        <Button Command="{Binding Close}" Margin="820,700,0,0"  Height="30" Width="130" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Закрыть"/>
     </Grid>
 </Window>

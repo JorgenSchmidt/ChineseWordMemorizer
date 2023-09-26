@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Chinese_Word_Memorizer.ViewModels"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Chinese Word Memorizer v.0.0.1.1 (не для коммерческого использования, распространяется на безвозмездной основе)" Height="115" Width="900" ResizeMode="NoResize">
+        Title="Chinese Word Memorizer v.0.0.1.2 (не для коммерческого использования, распространяется на безвозмездной основе)" Height="115" Width="900" ResizeMode="NoResize">
     <Window.DataContext>
         <local:AppWindowViewModel/>
     </Window.DataContext>

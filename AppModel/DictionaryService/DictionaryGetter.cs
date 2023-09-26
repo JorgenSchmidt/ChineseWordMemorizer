@@ -1,6 +1,5 @@
 ﻿using AppCore.Entities;
 using AppCore.Responses;
-using AppModel.ConverterService;
 
 namespace AppModel.DictionaryService
 {
