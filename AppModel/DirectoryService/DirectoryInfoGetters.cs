@@ -22,8 +22,8 @@
                 var fileList = Directory.GetFiles(DirectoryPath);
                 foreach (var file in fileList)
                 {
-                    var sp = file.Split('\\');
-                    Message += sp[sp.Length - 1] + "\n";
+                    var splits = file.Split('\\');
+                    Message += splits [splits.Length - 1] + "\n";
                 }
             }
             catch (Exception e) 

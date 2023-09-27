@@ -1,4 +1,6 @@
-﻿using Chinese_Word_Memorizer.AppService;
+﻿using AppCore.Responses;
+using AppModel.FileService;
+using Chinese_Word_Memorizer.AppService;
 using System;
 using System.Windows;
 
@@ -18,6 +20,8 @@ namespace Chinese_Word_Memorizer.ViewModels
                     async (obj) =>
                     {
                         // Открытие файла со словарём и загрузка из него данных в память программы
+                        //SimpleData<string> content = ContentGetters.GetContentFromFile(@"Dictionaries\hsk1_dict", "txt");
+
                         string fileName = Environment.CurrentDirectory + @"\Dictionaries\hsk1_dict.txt";
                         HSKDataLogic.Start(fileName);
 

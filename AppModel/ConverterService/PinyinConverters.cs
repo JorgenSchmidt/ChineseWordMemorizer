@@ -5,36 +5,38 @@ namespace AppModel.ConverterService
     public class PinyinConverters
     {
         /// <summary>
-        /// Переводит стандартную запись пиньинь в принятую в программе.
+        /// Переводит стандартную запись пиньинь в упрощённую стандартную (тон ставится после гласной).
         /// </summary>
-        public static string StandartPinyinToLocalPinyin (string standartString)
+        public static string StandartPinyinToSimple (string StandartString)
         {
+            var Result = "";
             bool vowelWasFinded = false;
-            var Answer = "";
 
-            foreach (var chr in standartString)
+            foreach (var symbol in StandartString)
             {
                 vowelWasFinded = false;
-                for (int ce = 1; ce <= 4; ce++)
+                for (int externalCounter = 1; externalCounter <= 4; externalCounter++)
                 {
-                    for (int ci = 0; ci <= 5; ci++)
+                    for (int internalCounter = 0; internalCounter <= 5; internalCounter++)
                     {
-                        var currentMassive = PinYinConstants.PinYinVowels[ce];
-                        if (chr == currentMassive[ci])
+
+                        var currentMassive = PinYinConstants.PinYinVowels[externalCounter];
+                        if (symbol == currentMassive[internalCounter])
                         {
                             var neutralMassive = PinYinConstants.PinYinVowels[0];
-                            if (neutralMassive[ci] == 'ü')
+                            if (neutralMassive[internalCounter] == 'ü')
                             {
-                                Answer += neutralMassive[4] + "'" + ce.ToString();
+                                Result += neutralMassive[4] + "'" + externalCounter.ToString();
                             }
                             else
                             {
-                                Answer += neutralMassive[ci] + ce.ToString();
+                                Result += neutralMassive[internalCounter] + externalCounter.ToString();
                             }
                             
                             vowelWasFinded = true;
                             break;
                         }
+
                     }
                     if (vowelWasFinded)
                     {
@@ -43,11 +45,11 @@ namespace AppModel.ConverterService
                 }
                 if (!vowelWasFinded)
                 {
-                    Answer += chr;
+                    Result += symbol;
                 }
             }
 
-            return Answer;
+            return Result;
         }
 
         /*/// <summary>

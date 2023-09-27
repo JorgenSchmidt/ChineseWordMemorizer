@@ -38,7 +38,7 @@ namespace Chinese_Word_Memorizer.AppService
             var Valide = DictionaryValidator.DictIsCorrect(Input.Data);
             if (!Valide.IsValide)
             {
-                MessageBox.Show(Valide.ErrorMessage);
+                MessageBox.Show(Valide.Message);
                 AppData.WindowOpeningIsAllow = false;
                 return;
             }

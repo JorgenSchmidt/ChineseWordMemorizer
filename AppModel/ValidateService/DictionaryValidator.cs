@@ -12,46 +12,46 @@ namespace AppModel.ValidateService
         /// <summary>
         /// Проверка входного словаря HSK на соответствие поставленным требованиям
         /// </summary>
-        public static ValideData DictIsCorrect (List<DictionaryElement> dict)
+        public static ValideData DictIsCorrect (List<DictionaryElement> InputDictionary)
         {
-            ValideData answer = new ValideData ();
-            answer.IsValide = true;
+            ValideData Message = new ValideData ();
+            Message.IsValide = true;
             var counter = 0;
             var errorcounter = 0;
             var maxerror = 20;
 
-            foreach (var curEl in dict)
+            foreach (var element in InputDictionary)
             {
                 counter++ ;
-                if (!IsCyrrilicWord(curEl.RussianWord))
+                if (!IsCyrrilicWord(element.RussianWord))
                 {
-                    answer.IsValide = false;
-                    answer.ErrorMessage += ("\nОшибка в строке словаря hsk #" + counter + " (кириллица, словарь HSK).") ;
+                    Message.IsValide = false;
+                    Message.Message += ("\nОшибка в строке словаря hsk #" + counter + " (кириллица, словарь HSK).") ;
                     errorcounter++;
                 } 
 
-                if (!IsChineseHieroglyph(curEl.ChineseWord))
+                if (!IsChineseHieroglyph(element.ChineseWord))
                 {
-                    answer.IsValide = false;
-                    answer.ErrorMessage += ("\nОшибка в строке словаря hsk #" + counter + " (中文单词, 普通话, словарь HSK).");
+                    Message.IsValide = false;
+                    Message.Message += ("\nОшибка в строке словаря hsk #" + counter + " (中文单词, 普通话, словарь HSK).");
                     errorcounter++;
                 }
 
-                if (!IsPinyinString(curEl.PinyinString))
+                if (!IsPinyinString(element.PinyinString))
                 {
-                    answer.IsValide = false;
-                    answer.ErrorMessage += ("\nОшибка в строке #" + counter + " (拼音, словарь HSK).");
+                    Message.IsValide = false;
+                    Message.Message += ("\nОшибка в строке #" + counter + " (拼音, словарь HSK).");
                     errorcounter++;
                 }
                 
                 if (errorcounter == maxerror)
                 {
-                    answer.ErrorMessage += "\nНакопилось " + maxerror + " ошибок в словаре.";
+                    Message.Message += "\nНакопилось " + maxerror + " ошибок в словаре.";
                     break;
                 }
             } 
 
-            return answer;
+            return Message;
         }
 
         /// <summary>
@@ -61,22 +61,22 @@ namespace AppModel.ValidateService
         /// </summary>
         public static ValideData UserListIsCorrect (HashSet<string> dict)
         {
-            ValideData answer = new ValideData ();
-            answer.IsValide = true;
+            ValideData Message = new ValideData ();
+            Message.IsValide = true;
             var counter = 0;
 
-            foreach (var curStr in dict)
+            foreach (var currentString in dict)
             {
                 counter++;
-                if (!IsCyrrilicWord(curStr))
+                if (!IsCyrrilicWord(currentString))
                 {
-                    answer.IsValide = false;
-                    answer.ErrorMessage = "\nОшибка в строке #" + counter + " (пользовательский файл). Проверьте файл на соответствие требованиям.\n"
+                    Message.IsValide = false;
+                    Message.Message = "\nОшибка в строке #" + counter + " (пользовательский файл). Проверьте файл на соответствие требованиям.\n"
                         + "Файл должен содержать кириллические слова, разделённые переносом строки (наличие табуляции в любой строке воспринимается как ошибка)";
                 }
             }
 
-            return answer;
+            return Message;
         }
 
         /// <summary>
@@ -88,13 +88,13 @@ namespace AppModel.ValidateService
             {
                 return false;
             }
-            var locString = input.ToLower();
-            foreach (var curSym in locString)
+            var lowered = input.ToLower();
+            foreach (var symbol in lowered)
             { 
-                if (curSym <= '\u0400' || curSym >= '\u04FF')
+                if (symbol <= '\u0400' || symbol >= '\u04FF')
                 {
-                    if (!(     curSym == '/' || curSym == ' ' || curSym == '!' || curSym == '-' || curSym == '.'
-                            || curSym == '?' || curSym == '*' || curSym == '[' || curSym == ']'))
+                    if (!(     symbol == '/' || symbol == ' ' || symbol == '!' || symbol == '-' || symbol == '.'
+                            || symbol == '?' || symbol == '*' || symbol == '[' || symbol == ']'))
                     {
                         return false;
                     }
@@ -112,11 +112,11 @@ namespace AppModel.ValidateService
             {
                 return false;
             }
-            foreach (var curSym in input)
+            foreach (var symbol in input)
             {
-                if (!(  (curSym >= '\u4E00' && curSym <= '\u9FFF')
-                    ||  (curSym >= '\u3400' && curSym <= '\u4DBF')
-                    ||  (curSym >= '\uF900' && curSym <= '\uFAFF')))
+                if (!(  (symbol >= '\u4E00' && symbol <= '\u9FFF')
+                    ||  (symbol >= '\u3400' && symbol <= '\u4DBF')
+                    ||  (symbol >= '\uF900' && symbol <= '\uFAFF')))
                 {
                     return false;
                 }
@@ -125,7 +125,7 @@ namespace AppModel.ValidateService
         }
 
         /// <summary>
-        /// Проверяет соответствует ли строка принятому в мире стандарту записи 拼音
+        /// Проверяет соответствует ли строка принятому в мире стандарту записи 拼音.
         /// </summary>
         public static bool IsPinyinString (string input)
         {
@@ -134,19 +134,19 @@ namespace AppModel.ValidateService
                 return false;
             }
 
-            foreach (var curSym in input)
+            foreach (var symbol in input)
             {
-                if(!(   curSym == 257 || curSym == 225 || curSym == 462 || curSym == 224 ||
-                        curSym == 275 || curSym == 233 || curSym == 283 || curSym == 232 ||
-                        curSym == 299 || curSym == 237 || curSym == 464 || curSym == 236 ||
-                        curSym == 333 || curSym == 243 || curSym == 466 || curSym == 242 ||
-                        curSym == 363 || curSym == 250 || curSym == 468 || curSym == 249 ||
-                        curSym == 252 || curSym == 472 || curSym == 470 || curSym == 474 || curSym == 476
+                if(!(   symbol == 257 || symbol == 225 || symbol == 462 || symbol == 224 ||
+                        symbol == 275 || symbol == 233 || symbol == 283 || symbol == 232 ||
+                        symbol == 299 || symbol == 237 || symbol == 464 || symbol == 236 ||
+                        symbol == 333 || symbol == 243 || symbol == 466 || symbol == 242 ||
+                        symbol == 363 || symbol == 250 || symbol == 468 || symbol == 249 ||
+                        symbol == 252 || symbol == 472 || symbol == 470 || symbol == 474 || symbol == 476
 
-                        || (curSym >= '\u0061' && curSym <= '\u007A')
+                        || (symbol >= '\u0061' && symbol <= '\u007A')
 
-                        || curSym == 32
-                        || curSym == 8217
+                        || symbol == 32
+                        || symbol == 8217
                    ))
                 {
                     return false;
@@ -174,11 +174,11 @@ namespace AppModel.ValidateService
                 return false;
             }
 
-            foreach (var curSym in input)
+            foreach (var symbol in input)
             {
-                if (!(  (curSym >= '\u0061' && curSym <= '\u007A')
-                    ||  (curSym >= '\u0030' && curSym <= '\u0034')
-                    ||  (curSym == 33)))
+                if (!(  (symbol >= '\u0061' && symbol <= '\u007A')
+                    ||  (symbol >= '\u0030' && symbol <= '\u0034')
+                    ||  (symbol == 33)))
                 {
                     return false;
                 }

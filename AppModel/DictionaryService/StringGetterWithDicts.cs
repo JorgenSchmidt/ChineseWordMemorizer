@@ -9,21 +9,22 @@ namespace AppModel.DictionaryService
     public class StringGetterWithDicts
     {
         /// <summary>
-        /// Если из дефолтного словаря есть 2 и более вхождений по русскому слову, возвращает изменённую строку для китайской записи с указанием тона 
+        /// Если из дефолтного словаря есть 2 и более вхождений по русскому слову, возвращает изменённую строку для китайской записи с указанием тона.
+        /// Это связано с тем, что некоторые китайские иероглифы могут иметь несколько вариантов их произношения (по тонам).
         /// </summary>
         public static string GetChangeStringByDefaultList (    string chineseInp, 
                                                                string russianInp, 
                                                                List<DictionaryElement> defaultDict
                                                           )
         {
-            string Answer = chineseInp;
+            string Result = chineseInp;
 
             var chineseEntries = new List<DictionaryElement>();
             chineseEntries = defaultDict.Where(x => x.ChineseWord.Equals(chineseInp)).Select(x => x).ToList();
 
             if (chineseEntries.Count == 1)
             {
-                return Answer;
+                return Result;
             }
             else
             {
@@ -53,12 +54,12 @@ namespace AppModel.DictionaryService
                                 }
                             }
                         }
-                        Answer += " t" + toneNumber;
+                        Result += " t" + toneNumber;
                     }
                 }
             }
 
-            return Answer;
+            return Result;
         }
     }
 }

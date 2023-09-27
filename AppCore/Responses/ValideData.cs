@@ -6,6 +6,6 @@
     public class ValideData
     {
         public bool IsValide { get; set; }
-        public string? ErrorMessage { get; set; }
+        public string? Message { get; set; }
     }
 }

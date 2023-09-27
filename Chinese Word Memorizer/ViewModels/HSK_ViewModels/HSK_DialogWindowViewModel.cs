@@ -217,7 +217,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                                 // Сравниваем полученные слова с введённым пользователем контентом
                                 if (
                                            (leftword.Equals(LeftTestWordText) && rightword.Equals(RightTestWordText))
-                                        || (leftword.Equals(LeftTestWordText) && (PinyinConverters.StandartPinyinToLocalPinyin(rightword)).Equals(RightTestWordText))
+                                        || (leftword.Equals(LeftTestWordText) && (PinyinConverters.StandartPinyinToSimple(rightword)).Equals(RightTestWordText))
                                    )
                                 {
                                     MessageBox.Show("Верно!");
@@ -243,7 +243,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                                 // Сравниваем полученные слова с введённым пользователем контентом
                                 if (
                                            (RussianCheckService.CheckAnswer(LeftTestWordText, leftword) && rightword.Equals(RightTestWordText))
-                                        || (RussianCheckService.CheckAnswer(LeftTestWordText, leftword) && (PinyinConverters.StandartPinyinToLocalPinyin(rightword)).Equals(RightTestWordText))
+                                        || (RussianCheckService.CheckAnswer(LeftTestWordText, leftword) && (PinyinConverters.StandartPinyinToSimple(rightword)).Equals(RightTestWordText))
                                    )
                                 {
                                     MessageBox.Show("Верно!");
@@ -537,7 +537,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                             var ValideUserListObject = DictionaryValidator.UserListIsCorrect(UserFileOutputData.Data);
                             if (!ValideUserListObject.IsValide)
                             {
-                                MessageBox.Show(ValideUserListObject.ErrorMessage);
+                                MessageBox.Show(ValideUserListObject.Message);
                                 return;
                             }
                             
