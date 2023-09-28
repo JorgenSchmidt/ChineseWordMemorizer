@@ -1,4 +1,5 @@
 ﻿using AppCore.Entities;
+using AppModel.DictionaryService;
 using Chinese_Word_Memorizer.AppService;
 using System;
 using System.Collections.Generic;
@@ -69,8 +70,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
         #region Список
 
         // Локальная переменная, отвечающая за показ текущего словаря
-        private static List<DictionaryChoisingElement>? LocalDictionary = GetInitialList();
-        public List<DictionaryChoisingElement>? displayedDictionary = GetViewedList();
+        public List<DictionaryChoisingElement>? displayedDictionary = DictionaryGetter.GetViewedList(AppData.MainViewedHSK_Dictionary);
         public List<DictionaryChoisingElement>? DisplayedDictionary
         {
             get { return displayedDictionary; }
@@ -238,6 +238,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 return new Command(
                     obj =>
                     {
+                        AppData.MainViewedHSK_Dictionary.Clear();
                         WindowsObjects.HSK_DictionaryDialogWindow.Close();
                         WindowsObjects.HSK_DictionaryDialogWindow = null;
                     }
@@ -246,32 +247,6 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
         }
         #endregion
 
-        #region Скрипты и методы
-        private static List<DictionaryChoisingElement>? GetInitialList ()
-        {
-            var Answer = new List<DictionaryChoisingElement>();
-            foreach (var element in AppData.CurrentAppDictionary)
-            {
-                Answer.Add(
-                    new DictionaryChoisingElement ()
-                    {
-                        RussianWord = element.RussianWord,
-                        ChineseWord = element.ChineseWord,
-                        PinyinString = element.PinyinString,
-                        IsChoised = false,
-                        IsViewed = true
-                    }    
-                );
-            }
-
-            return Answer;
-        }
-        private static List<DictionaryChoisingElement> GetViewedList()
-        {
-            var Answer = LocalDictionary.Where(x => x.IsViewed).Select(x => x).ToList();
-            return Answer;
-        }
-        #endregion
     }
 
     public enum VisibleModes

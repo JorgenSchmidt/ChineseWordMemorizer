@@ -8,14 +8,15 @@ namespace AppModel.DictionaryService
     /// </summary>
     public class DictionaryGetter
     {
+        #region Методы данных
         /// <summary>
         /// Метод, ожидающий получить на вход путь до существующего файла и возращающий на выход список элементов словаря HSK, 
         /// а так же информацию об успешности выполнения метода, успешно ли он был выполнен и сообщение об ошибке если таковая имела место быть.
         /// </summary>
-        public static OutputListData<DictionaryElement> GetMainDictionary (string Content)
+        public static OutputListData<DictionaryElement> GetMainDictionary(string Content)
         {
             OutputListData<DictionaryElement> Result = new OutputListData<DictionaryElement>();
-            Result.Data = new List<DictionaryElement> ();
+            Result.Data = new List<DictionaryElement>();
             Result.ErrorMessage = "";
             Result.IsSucsess = true;
             var counter = 0;
@@ -38,7 +39,7 @@ namespace AppModel.DictionaryService
                         PinyinString = currentLine[2]
                     });
                 }
-                Result.IsSucsess = true; 
+                Result.IsSucsess = true;
             }
             catch (Exception e)
             {
@@ -57,7 +58,7 @@ namespace AppModel.DictionaryService
         public static OutputHashSetData<string> GetUsersWordsList(string Content)
         {
             OutputHashSetData<string> Result = new OutputHashSetData<string>();
-            Result.Data = new HashSet<string>();   
+            Result.Data = new HashSet<string>();
             Result.ErrorMessage = "";
             Result.IsSucsess = true;
 
@@ -125,12 +126,44 @@ namespace AppModel.DictionaryService
             catch (Exception e)
             {
                 Result.IsSucsess = false;
-                Result.ErrorMessage = "Возникла неизвестная ошибка на этапе составления списка словарных единиц для тестирования. \n" 
-                    + "Исключение:\n" 
+                Result.ErrorMessage = "Возникла неизвестная ошибка на этапе составления списка словарных единиц для тестирования. \n"
+                    + "Исключение:\n"
                     + e.ToString();
             }
 
             return Result;
-        } 
+        }
+        #endregion
+
+        #region Методы элементов интерфейса
+        public static List<DictionaryChoisingElement>? GetInitialViewedList(List<DictionaryElement> InputList)
+        {
+            var Result = new List<DictionaryChoisingElement>();
+
+            foreach (var element in InputList)
+            {
+                Result.Add(
+                    new DictionaryChoisingElement()
+                    {
+                        RussianWord = element.RussianWord,
+                        ChineseWord = element.ChineseWord,
+                        PinyinString = element.PinyinString,
+                        IsChoised = false,
+                        IsViewed = true
+                    }
+                );
+            }
+
+            return Result;
+        }
+        public static List<DictionaryChoisingElement>? GetViewedList(List<DictionaryChoisingElement> InputList)
+        {
+            var Result = new List<DictionaryChoisingElement>();
+
+            Result = InputList.Where(x => x.IsViewed).Select(x => x).ToList();
+
+            return Result;
+        }
+        #endregion
     }
 }

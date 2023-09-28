@@ -47,7 +47,7 @@ namespace Chinese_Word_Memorizer.AppService
 
             // Передача полученного списка в глобальную память программы и получение разрешения на открытие окна
             AppData.WindowOpeningIsAllow = true;
-            AppData.CurrentAppDictionary = Input.Data;
+            AppData.MainHSK_Dictionary = Input.Data;
         }
     }
 }

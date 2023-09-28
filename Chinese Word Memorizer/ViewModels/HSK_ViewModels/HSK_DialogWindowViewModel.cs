@@ -368,6 +368,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 return new Command(
                     obj =>
                     {
+                        AppData.MainViewedHSK_Dictionary = DictionaryGetter.GetInitialViewedList(AppData.MainHSK_Dictionary);
                         WindowsObjects.HSK_DictionaryDialogWindow = new();
                         if (WindowsObjects.HSK_DictionaryDialogWindow.ShowDialog() == true)
                         {
@@ -487,7 +488,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                                 return;
                             }
                             
-                            CurrentWindowWordsListObject = DictionaryGetter.GetElementsByUserList(UserFileOutputData.Data, AppData.CurrentAppDictionary);
+                            CurrentWindowWordsListObject = DictionaryGetter.GetElementsByUserList(UserFileOutputData.Data, AppData.MainHSK_Dictionary);
                             UsersListElementsCount = CurrentWindowWordsListObject.Data.Count;
                             if (!CurrentWindowWordsListObject.IsSucsess)
                             {
@@ -519,7 +520,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 return new Command(
                     obj =>
                     {
-                        AppData.CurrentAppDictionary.Clear();
+                        AppData.MainHSK_Dictionary.Clear();
                         AppData.WindowOpeningIsAllow = false;
                         WindowsObjects.HSK_DialogWindow.Close();
                         WindowsObjects.HSK_DialogWindow = null;
@@ -561,7 +562,8 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
 
                     case SwitchModes.ChineseMode:
 
-                        var changedChineseWord = StringGetterWithDicts.GetChangeStringByDefaultList(ChineseWord, RussianWord, AppData.CurrentAppDictionary); // Изменить логику работы до 0.0.1.3
+                        // Изменить логику работы до 0.0.1.3
+                        var changedChineseWord = StringGetterWithDicts.GetChangeStringByDefaultList(ChineseWord, RussianWord, AppData.MainHSK_Dictionary); 
 
                         MainQuizWord = changedChineseWord;
                         break;
