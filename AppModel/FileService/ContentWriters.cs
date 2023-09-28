@@ -14,7 +14,7 @@ namespace AppModel.FileService
         /// <param name="FilePath"> Относительный путь до файла (относительно исполняемого .exe файла программы). </param>
         /// <param name="Extention"> Расширение файла. </param>
         /// <returns> Сообщение об успешности выполнения записи данных в файл. </returns>
-        public ValideData WriteContentToFile (string Content, string FilePath, string Extension)
+        public static ValideData WriteContentToFile (string Content, string FilePath, string Extension)
         {
             var Message = new ValideData();
             Message.Message = "";

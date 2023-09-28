@@ -1,4 +1,5 @@
 ﻿using AppModel.DictionaryService;
+using AppModel.FileService;
 using AppModel.ValidateService;
 using System.IO;
 using System.Windows;
@@ -13,23 +14,24 @@ namespace Chinese_Word_Memorizer.AppService
         /// <summary>
         /// Запуск скрипта формирования и проверки словаря HSK из соответствующего файла, а так же его добавление в глобальную переменную программы, 
         /// отвечающей за хранение словаря.
+        /// Расширения словарей обязательно должны быть формата .txt
         /// </summary>
         public static void Start(string fileName)
         {
-            var file = new FileInfo(fileName);
-            // Проверка файла на существование, а так же содержится ли в файле что-либо
-            if (!file.Exists || file.Length == 0)
+            // Получение содержимого файла
+            var Content = ContentGetters.GetContentFromFile(fileName, "txt");
+            if (!Content.IsSucsess)
             {
-                MessageBox.Show("Проверьте существует ли файл " + fileName + " в директории \"Dictionares\" и не является ли его содержимое пустым.");
+                MessageThrowers.ShowErrorByFile(Content.ErrorMessage, fileName);
                 AppData.WindowOpeningIsAllow = false;
                 return;
             }
 
             // Формирование списка данных по определённому шаблону, если операция не была произведена успешно, выдаёт сообщение об ошибке
-            var Input = DictionaryGetter.GetDictionaryFromFile(fileName);
+            var Input = DictionaryGetter.GetMainDictionary(Content.Data);
             if (!Input.IsSucsess)
             {
-                MessageBox.Show(Input.ErrorMessage);
+                MessageThrowers.ShowErrorByFile(Input.ErrorMessage, fileName);
                 AppData.WindowOpeningIsAllow = false;
                 return;
             }
@@ -38,7 +40,7 @@ namespace Chinese_Word_Memorizer.AppService
             var Valide = DictionaryValidator.DictIsCorrect(Input.Data);
             if (!Valide.IsValide)
             {
-                MessageBox.Show(Valide.Message);
+                MessageThrowers.ShowErrorByFile(Valide.Message, fileName);
                 AppData.WindowOpeningIsAllow = false;
                 return;
             }

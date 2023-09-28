@@ -12,10 +12,10 @@ namespace AppModel.DictionaryService
         /// Если из дефолтного словаря есть 2 и более вхождений по русскому слову, возвращает изменённую строку для китайской записи с указанием тона.
         /// Это связано с тем, что некоторые китайские иероглифы могут иметь несколько вариантов их произношения (по тонам).
         /// </summary>
-        public static string GetChangeStringByDefaultList (    string chineseInp, 
+        public static string GetChangeStringByDefaultList (    string chineseInp, // Изменить логику работы до 0.0.1.3
                                                                string russianInp, 
                                                                List<DictionaryElement> defaultDict
-                                                          )
+                                                          ) 
         {
             string Result = chineseInp;
 
@@ -28,22 +28,22 @@ namespace AppModel.DictionaryService
             }
             else
             {
-                foreach (var el in chineseEntries)
+                foreach (var element in chineseEntries)
                 {
-                    if (el.RussianWord.Equals(russianInp))
+                    if (element.RussianWord.Equals(russianInp))
                     {
                         string toneNumber = "";
-                        foreach (var chr in el.PinyinString)
+                        foreach (var symbol in element.PinyinString)
                         {
                             var vowelWasFinded = false;
-                            for (int ce = 0; ce <= 4; ce++)
+                            for (int externalCounter = 0; externalCounter <= 4; externalCounter++)
                             {
-                                for (int ci = 0; ci <= 5; ci++)
+                                for (int internalCounter = 0; internalCounter <= 5; internalCounter++)
                                 {
-                                    var currentMassive = PinYinConstants.PinYinVowels[ce];
-                                    if (chr == currentMassive[ci])
+                                    var currentMassive = PinYinConstants.PinYinVowels[externalCounter];
+                                    if (symbol == currentMassive[internalCounter])
                                     {
-                                        toneNumber += ce.ToString();
+                                        toneNumber += externalCounter.ToString();
                                         vowelWasFinded = true;
                                         break;
                                     }

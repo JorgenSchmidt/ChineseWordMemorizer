@@ -37,7 +37,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
             }
         }
 
-        public Command ResetFinded
+        public Command ResetFound
         {
             get
             {
@@ -70,13 +70,13 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
 
         // Локальная переменная, отвечающая за показ текущего словаря
         private static List<DictionaryChoisingElement>? LocalDictionary = GetInitialList();
-        public List<DictionaryChoisingElement>? viewedDictionary = GetViewedList();
-        public List<DictionaryChoisingElement>? ViewedDictionary
+        public List<DictionaryChoisingElement>? displayedDictionary = GetViewedList();
+        public List<DictionaryChoisingElement>? DisplayedDictionary
         {
-            get { return viewedDictionary; }
+            get { return displayedDictionary; }
             set
             {
-                viewedDictionary = value;
+                displayedDictionary = value;
                 CheckChanges();
             }
         }
@@ -111,7 +111,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                             MessageBox.Show("Такой файл уже существует в директории WordsList.");
                             return;
                         }
-                        var choisedlist = ViewedDictionary.Where(x => x.IsChoised).Select(x => x.RussianWord).ToList();
+                        var choisedlist = DisplayedDictionary.Where(x => x.IsChoised).Select(x => x.RussianWord).ToList();
                         if (choisedlist.Count() == 0)
                         {
                             MessageBox.Show("Не выбрано ни одного элемента.");
@@ -139,7 +139,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 return new Command(
                     obj =>
                     {
-                        var elements = ViewedDictionary.Where(x => x.IsChoised == true).Select(x => x.RussianWord);
+                        var elements = DisplayedDictionary.Where(x => x.IsChoised == true).Select(x => x.RussianWord);
 
                         if (elements.Count() != 0)
                         {
@@ -162,6 +162,45 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
         }
 
         public Command ResetChoised
+        {
+            get
+            {
+                return new Command(
+                    obj =>
+                    {
+
+                    }
+                );
+            }
+        }
+
+        public Command SortingByPinYin
+        {
+            get
+            {
+                return new Command(
+                    obj =>
+                    {
+
+                    }
+                );
+            }
+        }
+
+        public Command SortingByRussian
+        {
+            get
+            {
+                return new Command(
+                    obj =>
+                    {
+
+                    }
+                );
+            }
+        }
+
+        public Command ShowAllUsersLists
         {
             get
             {

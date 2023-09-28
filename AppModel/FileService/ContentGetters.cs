@@ -22,6 +22,14 @@ namespace AppModel.FileService
 
             string ActuallyFilePath = Environment.CurrentDirectory + @"\" + FilePath + "." + Extention;
 
+            var file = new FileInfo(ActuallyFilePath);
+            if (!file.Exists || file.Length == 0)
+            {
+                Result.ErrorMessage = "Проверьте существует ли файл " + FilePath + " и не является ли его содержимое пустым.";
+                Result.IsSucsess = false;
+                return Result;
+            }
+
             try
             {
                 Result.Data = File.ReadAllText(ActuallyFilePath);

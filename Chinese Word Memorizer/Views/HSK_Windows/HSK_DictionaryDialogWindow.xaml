@@ -21,11 +21,11 @@
         <Label Content="Поиск слов в словаре:" Margin="22,15,0,0" Height="25" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
         <TextBox Text="{Binding SearchString}" Margin="25,45,0,0" Height="25" Width="400" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
         <Button Command="{Binding FindWords}" Margin="435,45,0,0"  Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Найти" />
-        <Button Command="{Binding ResetFinded}" Margin="540,45,0,0"  Height="25" Width="130" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Сбросить найденное" />
+        <Button Command="{Binding ResetFound}" Margin="540,45,0,0"  Height="25" Width="130" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Сбросить найденное" />
         <Button Command="{Binding ChangeVisibleMode}" Margin="725,45,0,0"  Height="25" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Изменить режим отображения словаря" />
 
         <!--Список-->
-        <ListView ItemsSource="{Binding ViewedDictionary}" Margin="0,90,0,0" Height="450" Width="950" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <ListView ItemsSource="{Binding DisplayedDictionary}" Margin="0,90,0,0" Height="450" Width="950" HorizontalAlignment="Center" VerticalAlignment="Top">
             <ListView.View>
                 <GridView>
                     <!--Основные поля списка-->
@@ -82,13 +82,13 @@
         <Button Command="{Binding ResetChoised}" Margin="40,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
             <TextBlock TextAlignment="Center" FontSize="10"> Сбросить выбранное <LineBreak/> к изначальному <LineBreak/> состоянию</TextBlock>
         </Button>
-        <Button Command="" Margin="300,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <Button Command="{Binding SortingByPinYin}" Margin="300,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
             <TextBlock TextAlignment="Center" FontSize="10"> Сортировать по 拼音 </TextBlock>
         </Button>
-        <Button Command="" Margin="560,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <Button Command="{Binding SortingByRussian}" Margin="560,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
             <TextBlock TextAlignment="Center" FontSize="10"> Сортировать по <LineBreak/> русскому алфавиту </TextBlock>
         </Button>
-        <Button Command="" Margin="820,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <Button Command="{Binding ShowAllUsersLists}" Margin="820,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
             <TextBlock TextAlignment="Center" FontSize="10"> Показать все <LineBreak/> пользовательские <LineBreak/> словари </TextBlock>
         </Button>
 

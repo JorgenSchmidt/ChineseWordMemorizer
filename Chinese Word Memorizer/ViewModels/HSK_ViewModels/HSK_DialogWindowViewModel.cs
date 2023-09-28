@@ -4,12 +4,14 @@ using AppModel.ChekerService;
 using AppModel.ConverterService;
 using AppModel.DictionaryService;
 using AppModel.DirectoryService;
+using AppModel.FileService;
 using AppModel.ValidateService;
 using Chinese_Word_Memorizer.AppService;
+
 using System;
-using System.IO;
 using System.Windows;
 
+// В данном классе сначала идут переменные, ассоциированные с элементами окна, после вспомогательные поля и скрипты
 namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
 {
     /// <summary>
@@ -17,69 +19,6 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
     /// </summary>
     public class HSK_DialogWindowViewModel : NotifyPropertyChanged
     {
-        #region Локальные переменные (окна)
-        // Локальная переменная, которая содержит в себе словарь тестирования
-        private OutputListData<DictionaryElement> CurrentWindowWordsListObject = new OutputListData<DictionaryElement>();
-        // Локальная переменная, отвечающая за переключение режимов тестирования
-        private SwitchModes CurrentSwitchMode;
-        // Локальная переменная, отвечающая за номер текущего элемента, по которому пользователю нужно дать ответ
-        private int CurrentWordNumber;
-        #endregion
-
-        #region Вспомогательные методы
-        // Отвечает за показ контента в элементе, который ассоциирован со словом, которому необходимо дать соответствующий перевод/транскрипцию 
-        // в зависимости от включённого пользователем режима тестирования
-        private void GetContentForTestLabels (string RussianWord, string ChineseWord, string Pinyin)
-        {
-            try
-            {
-                switch (CurrentSwitchMode)
-                {
-                    case SwitchModes.RussianMode:
-                        MainTestWord = RussianWord;
-                    break;
-
-                    case SwitchModes.ChineseMode:
-
-                        var changedChineseWord = StringGetterWithDicts.GetChangeStringByDefaultList(ChineseWord, RussianWord, AppData.CurrentAppDictionary);
-
-                        MainTestWord = changedChineseWord;
-                    break;
-
-                    case SwitchModes.PinyinMode:
-                        MainTestWord = Pinyin;
-                    break;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-
-        // Скрипт, переключающий состояние элементов окна в дефолтный режим
-        private void FinishTesting ()
-        {
-            TestingWasStarted = false;
-            InitiatingButtonContent = "Начать!";
-            MainTestWord = "";
-            LeftTestWordLabel = "Китайское слово:";
-            LeftTestWordTextIsEnabled = false;
-            LeftTestWordText = "";
-            RightTestWordLabel = "Пиньинь";
-            RightTestWordText = "";
-            ConfirmButtonIsEnabled = false;
-            RightTestWordTextIsEnabled = false;
-            RussianModeButtonIsEnabled = false;
-            ChineseModeButtonIsEnabled = true;
-            PinyinModeButtonIsEnabled = true;
-            ShowDictIsEnabled = true;
-            CurrentWindowWordsListObject.Data.Clear();
-            CurrentWindowWordsListObject.IsSucsess = false;
-            CurrentWindowWordsListObject.ErrorMessage = "";
-        }
-        #endregion
-
         #region Блок ввода имени файла
         // Имя файла (задаётся относительнный путь)
         public string? fileName;
@@ -96,85 +35,85 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
 
         #region Блок тестирования
         // Ассоциирован с label элементом, содержит слово, по которому нужно дать ответ
-        public string? mainTestWord; // вмещается 26 символов
-        public string? MainTestWord
+        public string? mainQuizWord; // вмещается 26 символов
+        public string? MainQuizWord
         {
-            get { return mainTestWord; }
+            get { return mainQuizWord; }
             set
             {
-                mainTestWord = value;
+                mainQuizWord = value;
                 CheckChanges();
             }
         }
 
         // Ассоциирован с первым тестировочным label элементом, отображает на экране что нужно ввести в соответствующий textbox
-        public string? leftTestWordLabel = "Китайское слово:";
-        public string? LeftTestWordLabel
+        public string? leftQuizWordLabel = "Китайское слово:";
+        public string? LeftQuizWordLabel
         {
-            get { return leftTestWordLabel; }
+            get { return leftQuizWordLabel; }
             set
             {
-                leftTestWordLabel = value;
+                leftQuizWordLabel = value;
                 CheckChanges();
             }
         }
 
         // Ассоциирован с первым тестировочным textbox'ом, в который необходимо ввести ответ
-        public string? leftTestWordText;
-        public string? LeftTestWordText
+        public string? leftQuizWordText;
+        public string? LeftQuizWordText
         {
-            get { return leftTestWordText; }
+            get { return leftQuizWordText; }
             set
             {
-                leftTestWordText = value;
+                leftQuizWordText = value;
                 CheckChanges();
             }
         }
 
         // Ассоциирован с параметром IsEnabled первого textbox'a, отвечает за то, будет ли активирован textbox
-        public bool leftTestWordTextIsEnabled = false;
-        public bool LeftTestWordTextIsEnabled
+        public bool leftQuizWordTextIsEnabled = false;
+        public bool LeftQuizWordTextIsEnabled
         {
-            get { return leftTestWordTextIsEnabled; }
+            get { return leftQuizWordTextIsEnabled; }
             set
             {
-                leftTestWordTextIsEnabled = value;
+                leftQuizWordTextIsEnabled = value;
                 CheckChanges();
             }
         }
 
         // Ассоциирован со вторым тестировочным label элементом, отображает на экране что нужно ввести в соответствующий textbox
-        public string? rightTestWordLabel = "Пиньинь:";
-        public string? RightTestWordLabel
+        public string? rightQuizWordLabel = "Пиньинь:";
+        public string? RightQuizWordLabel
         {
-            get { return rightTestWordLabel; }
+            get { return rightQuizWordLabel; }
             set
             {
-                rightTestWordLabel = value;
+                rightQuizWordLabel = value;
                 CheckChanges();
             }
         }
 
         // Ассоциирован со вторым тестировочным textbox'ом, в который необходимо ввести ответ
-        public string? rightTestWordText;
-        public string? RightTestWordText
+        public string? rightQuizWordText;
+        public string? RightQuizWordText
         {
-            get { return rightTestWordText; }
+            get { return rightQuizWordText; }
             set
             {
-                rightTestWordText = value;
+                rightQuizWordText = value;
                 CheckChanges();
             }
         }
 
         // Ассоциирован с параметром IsEnabled второго textbox'a, отвечает за то, будет ли активирован textbox
-        public bool rightTestWordTextIsEnabled = false;
-        public bool RightTestWordTextIsEnabled
+        public bool rightQuizWordTextIsEnabled = false;
+        public bool RightQuizWordTextIsEnabled
         {
-            get { return rightTestWordTextIsEnabled; }
+            get { return rightQuizWordTextIsEnabled; }
             set
             {
-                rightTestWordTextIsEnabled = value;
+                rightQuizWordTextIsEnabled = value;
                 CheckChanges();
             }
         }
@@ -216,10 +155,11 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
 
                                 // Сравниваем полученные слова с введённым пользователем контентом
                                 if (
-                                           (leftword.Equals(LeftTestWordText) && rightword.Equals(RightTestWordText))
-                                        || (leftword.Equals(LeftTestWordText) && (PinyinConverters.StandartPinyinToSimple(rightword)).Equals(RightTestWordText))
+                                           (leftword.Equals(LeftQuizWordText) && rightword.Equals(RightQuizWordText))
+                                        || (leftword.Equals(LeftQuizWordText) && (PinyinConverters.StandartPinyinToSimple(rightword)).Equals(RightQuizWordText))
                                    )
                                 {
+                                    CorrectAnswersCount++;
                                     MessageBox.Show("Верно!");
                                 }
                                 else
@@ -242,10 +182,11 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
 
                                 // Сравниваем полученные слова с введённым пользователем контентом
                                 if (
-                                           (RussianCheckService.CheckAnswer(LeftTestWordText, leftword) && rightword.Equals(RightTestWordText))
-                                        || (RussianCheckService.CheckAnswer(LeftTestWordText, leftword) && (PinyinConverters.StandartPinyinToSimple(rightword)).Equals(RightTestWordText))
+                                           (RussianCheckService.CheckAnswer(LeftQuizWordText, leftword) && rightword.Equals(RightQuizWordText))
+                                        || (RussianCheckService.CheckAnswer(LeftQuizWordText, leftword) && (PinyinConverters.StandartPinyinToSimple(rightword)).Equals(RightQuizWordText))
                                    )
                                 {
+                                    CorrectAnswersCount++;
                                     MessageBox.Show("Верно!");
                                 }
                                 else
@@ -267,8 +208,9 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                                 rightword = CurrentWindowWordsListObject.Data[CurrentWordNumber].RussianWord;
 
                                 // Сравниваем полученные слова с введённым пользователем контентом
-                                if (leftword.Equals(LeftTestWordText) && RussianCheckService.CheckAnswer(RightTestWordText, rightword))
+                                if (leftword.Equals(LeftQuizWordText) && RussianCheckService.CheckAnswer(RightQuizWordText, rightword))
                                 {
+                                    CorrectAnswersCount++;
                                     MessageBox.Show("Верно!");
                                 }
                                 else
@@ -282,8 +224,8 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                         }
 
                         // Обнуление контента локальных переменных, ассоциированных с соответствующим textbox'ом
-                        LeftTestWordText = "";
-                        RightTestWordText = "";
+                        LeftQuizWordText = "";
+                        RightQuizWordText = "";
                         // Удаление элемента, по которому был дан ответ пользователем
                         CurrentWindowWordsListObject.Data.RemoveAt(CurrentWordNumber);
 
@@ -302,8 +244,11 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                         }
                         else
                         {
-                            MessageBox.Show("Тестирование окончено!");
-                            FinishTesting();
+                            string Content = "Тестирование окончено!" + "\n\n"
+                                + "Набрано " + CorrectAnswersCount + " ответов из " + UsersListElementsCount + ".";
+
+                            MessageBox.Show(Content);
+                            FinishQuiz();
                         }
                     }    
                 );
@@ -334,8 +279,8 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                         RussianModeButtonIsEnabled = false;
                         ChineseModeButtonIsEnabled = true;
                         PinyinModeButtonIsEnabled = true;
-                        LeftTestWordLabel = "Китайское слово:";
-                        RightTestWordLabel = "Пиньинь:";
+                        LeftQuizWordLabel = "Китайское слово:";
+                        RightQuizWordLabel = "Пиньинь:";
                         CurrentSwitchMode = SwitchModes.RussianMode;
                     }
                 ); 
@@ -364,8 +309,8 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                         RussianModeButtonIsEnabled = true;
                         ChineseModeButtonIsEnabled = false;
                         PinyinModeButtonIsEnabled = true;
-                        LeftTestWordLabel = "Русское слово:";
-                        RightTestWordLabel = "Пиньинь:";
+                        LeftQuizWordLabel = "Русское слово:";
+                        RightQuizWordLabel = "Пиньинь:";
                         CurrentSwitchMode = SwitchModes.ChineseMode;
                     }
                 );
@@ -394,8 +339,8 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                         RussianModeButtonIsEnabled = true;
                         ChineseModeButtonIsEnabled = true;
                         PinyinModeButtonIsEnabled = false;
-                        LeftTestWordLabel = "Китайское слово:";
-                        RightTestWordLabel = "Русское слово:";
+                        LeftQuizWordLabel = "Китайское слово:";
+                        RightQuizWordLabel = "Русское слово:";
                         CurrentSwitchMode = SwitchModes.PinyinMode;
                     }
                 );
@@ -473,6 +418,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 return new Command(
                     obj =>
                     {
+                        // Запланировано изменение логики к 0.0.1.3 (открывается окно, где в асинхронном режиме проверяются все файлы на валидность)
                         var filelist = DirectoryInfoGetters.GetValideFileList(Environment.CurrentDirectory + @"\WordsLists");
                         MessageBox.Show(filelist);
                     }
@@ -481,22 +427,22 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
         }
 
         // Переменная, отвечающая за то, началось ли тестирование
-        private bool TestingWasStarted = false;
+        private bool QuizWasStarted = false;
 
         // Контент кнопки начала тестирования
-        public string? initiatingButtonContent = "Начать!";
-        public string? InitiatingButtonContent
+        public string? startQuizButtonContent = "Начать!";
+        public string? StartQuizButtonContent
         {
-            get { return initiatingButtonContent; }
+            get { return startQuizButtonContent; }
             set
             {
-                initiatingButtonContent= value;
+                startQuizButtonContent = value;
                 CheckChanges();
             }
         }
 
         // Свойство, ассоциирование с кнопкой, запускающей скрипт начала/окончания тестирования
-        public Command InitiatingButton
+        public Command StartQuizButton
         {
             get
             {
@@ -505,10 +451,10 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                     {
                         // Если тестирование уже было начато (если нажать на кнопку - тестирование остановится). 
                         // Тестирование приостанавливается, интерфейс приходит к изначальному состоянию вне зависимости от выбранного режима
-                        if (TestingWasStarted)
+                        if (QuizWasStarted)
                         {
                             MessageBox.Show("Тестирование окончено досрочно.");
-                            FinishTesting();
+                            FinishQuiz();
                         }
                         // Если тестирование не было начато (если нажать на кнопку - тестирование начнётся). 
                         else
@@ -519,44 +465,37 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                                 return;
                             }
 
-                            var FileDirectory = Environment.CurrentDirectory + @"\WordsLists\" + FileName + ".txt";
-                            var File = new FileInfo(FileDirectory);
-                            if (!File.Exists || File.Length == 0)
+                            var RelativeFilePath = @"WordsLists\" + FileName;
+                            var FileContent = ContentGetters.GetContentFromFile(RelativeFilePath, "txt");
+                            if (!FileContent.IsSucsess)
                             {
-                                MessageBox.Show("Файла с указанным именем не существует.");
+                                MessageThrowers.ShowErrorByFile(FileContent.ErrorMessage, RelativeFilePath);
                                 return;
                             }
 
-                            var UserFileOutputData = DictionaryGetter.GetUserListFromFile(FileDirectory);
+                            var UserFileOutputData = DictionaryGetter.GetUsersWordsList(FileContent.Data);
                             if (!UserFileOutputData.IsSucsess)
                             {
-                                MessageBox.Show(UserFileOutputData.ErrorMessage);
+                                MessageThrowers.ShowErrorByFile(UserFileOutputData.ErrorMessage, RelativeFilePath);
                                 return; 
                             }
 
                             var ValideUserListObject = DictionaryValidator.UserListIsCorrect(UserFileOutputData.Data);
                             if (!ValideUserListObject.IsValide)
                             {
-                                MessageBox.Show(ValideUserListObject.Message);
+                                MessageThrowers.ShowErrorByFile(ValideUserListObject.Message, RelativeFilePath);
                                 return;
                             }
                             
                             CurrentWindowWordsListObject = DictionaryGetter.GetElementsByUserList(UserFileOutputData.Data, AppData.CurrentAppDictionary);
+                            UsersListElementsCount = CurrentWindowWordsListObject.Data.Count;
                             if (!CurrentWindowWordsListObject.IsSucsess)
                             {
-                                MessageBox.Show(CurrentWindowWordsListObject.ErrorMessage);
+                                MessageThrowers.ShowErrorByFile(CurrentWindowWordsListObject.ErrorMessage, RelativeFilePath);
                                 return;
                             }
 
-                            TestingWasStarted = true;
-                            InitiatingButtonContent = "Завершить\nдосрочно";
-                            LeftTestWordTextIsEnabled = true;
-                            RightTestWordTextIsEnabled = true;
-                            ConfirmButtonIsEnabled = true;
-                            RussianModeButtonIsEnabled = false;
-                            ChineseModeButtonIsEnabled = false;
-                            PinyinModeButtonIsEnabled = false;
-                            ShowDictIsEnabled = false;
+                            StartQuiz();
 
                             Random randObj = new Random();
                             CurrentWordNumber = randObj.Next(0, CurrentWindowWordsListObject.Data.Count - 1);
@@ -587,6 +526,99 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                     }
                 );
             }
+        }
+        #endregion
+
+        #region Локальные переменные (окна)
+        // Локальная переменная, которая содержит в себе словарь тестирования
+        private OutputListData<DictionaryElement> CurrentWindowWordsListObject = new OutputListData<DictionaryElement>();
+
+        // Локальная переменная, отвечающая за переключение режимов тестирования
+        private SwitchModes CurrentSwitchMode;
+
+        // Локальная переменная, отвечающая за номер текущего элемента, по которому пользователю нужно дать ответ
+        private int CurrentWordNumber;
+
+        // Локальная переменная, отвечающая за количество правильно введённых ответов
+        private int CorrectAnswersCount;
+
+        // Локальная переменная, отвечающая за количество элементов в пользовательском списке
+        private int UsersListElementsCount;
+        #endregion
+
+        #region Скрипты
+        // Отвечает за показ контента в элементе, который ассоциирован со словом, которому необходимо дать соответствующий перевод/транскрипцию 
+        // в зависимости от включённого пользователем режима тестирования
+        private void GetContentForTestLabels(string RussianWord, string ChineseWord, string Pinyin)
+        {
+            try
+            {
+                switch (CurrentSwitchMode)
+                {
+                    case SwitchModes.RussianMode:
+                        MainQuizWord = RussianWord;
+                        break;
+
+                    case SwitchModes.ChineseMode:
+
+                        var changedChineseWord = StringGetterWithDicts.GetChangeStringByDefaultList(ChineseWord, RussianWord, AppData.CurrentAppDictionary); // Изменить логику работы до 0.0.1.3
+
+                        MainQuizWord = changedChineseWord;
+                        break;
+
+                    case SwitchModes.PinyinMode:
+                        MainQuizWord = Pinyin;
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        // Скрипт, переключающий состояние элементов окна в режим проверки знания пользователем указанной им лексики
+        private void StartQuiz()
+        {
+            QuizWasStarted = true;
+            StartQuizButtonContent = "Завершить\nдосрочно";
+            LeftQuizWordTextIsEnabled = true;
+            RightQuizWordTextIsEnabled = true;
+            ConfirmButtonIsEnabled = true;
+            RussianModeButtonIsEnabled = false;
+            ChineseModeButtonIsEnabled = false;
+            PinyinModeButtonIsEnabled = false;
+            ShowDictIsEnabled = false;
+        }
+
+        // Скрипт, переключающий состояние элементов окна в дефолтный режим
+        private void FinishQuiz()
+        {
+            // Элементы окна "принимающие" непосредственное участие в проверке знания пользователем указанной им лексики
+            QuizWasStarted = false;
+            StartQuizButtonContent = "Начать!";
+            MainQuizWord = "";
+            LeftQuizWordLabel = "Китайское слово:";
+            LeftQuizWordTextIsEnabled = false;
+            LeftQuizWordText = "";
+            RightQuizWordLabel = "Пиньинь";
+            RightQuizWordText = "";
+            RightQuizWordTextIsEnabled = false;
+
+            // Прочие элементы окна
+            ConfirmButtonIsEnabled = false;
+            RussianModeButtonIsEnabled = false;
+            ChineseModeButtonIsEnabled = true;
+            PinyinModeButtonIsEnabled = true;
+            ShowDictIsEnabled = true;
+
+            // Поля
+            CurrentWordNumber = 0;
+            CorrectAnswersCount = 0;
+            UsersListElementsCount = 0;
+            CurrentWindowWordsListObject.Data.Clear();
+            CurrentWindowWordsListObject.IsSucsess = false;
+            CurrentWindowWordsListObject.ErrorMessage = "";
         }
         #endregion
     }

@@ -17,11 +17,11 @@
         <TextBox Text="{Binding FileName}" Margin="0,50,0,0" Height="30" Width="650" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
         <!-- Блок тестирования -->
-        <Label Content="{Binding MainTestWord}" Margin="0,110,0,0" Height="65" Width="650" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="#3c3" BorderThickness="4" />
-        <Label Content="{Binding LeftTestWordLabel}" Margin="20,200,0,0" Height="40" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="#211" BorderThickness="1" />
-        <TextBox Text="{Binding LeftTestWordText}" IsEnabled="{Binding LeftTestWordTextIsEnabled}" Margin="20,250,0,0" Height="45" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label Content="{Binding RightTestWordLabel}" Margin="370,200,0,0" Height="40" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="#211" BorderThickness="1" />
-        <TextBox Text="{Binding RightTestWordText}" IsEnabled="{Binding RightTestWordTextIsEnabled}" Margin="370,250,0,0" Height="45" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label Content="{Binding MainQuizWord}" Margin="0,110,0,0" Height="65" Width="650" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="#3c3" BorderThickness="4" />
+        <Label Content="{Binding LeftQuizWordLabel}" Margin="20,200,0,0" Height="40" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="#211" BorderThickness="1" />
+        <TextBox Text="{Binding LeftQuizWordText}" IsEnabled="{Binding LeftQuizWordTextIsEnabled}" Margin="20,250,0,0" Height="45" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label Content="{Binding RightQuizWordLabel}" Margin="370,200,0,0" Height="40" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="#211" BorderThickness="1" />
+        <TextBox Text="{Binding RightQuizWordText}" IsEnabled="{Binding RightQuizWordTextIsEnabled}" Margin="370,250,0,0" Height="45" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <Button Command="{Binding CheckAnswer}" IsEnabled="{Binding ConfirmButtonIsEnabled}" Margin="0,320,0,0"  Height="40" Width="150" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Ответить"/>
 
         <!-- Блок переключения режимов тестирования -->
@@ -41,7 +41,7 @@
         <Button Command="{Binding ShowFileList}" Margin="0,490,0,0"  Height="70" Width="140" HorizontalAlignment="Center" VerticalAlignment="Top">
             <TextBlock TextAlignment="Center"> Посмотреть список <LineBreak/> файлов, имеющихся <LineBreak/> в папке WordsLists </TextBlock>
         </Button>
-        <Button Command="{Binding InitiatingButton}" Content="{Binding InitiatingButtonContent}" Margin="467,490,0,0"  Height="70" Width="90" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" />
+        <Button Command="{Binding StartQuizButton}" Content="{Binding StartQuizButtonContent}" Margin="467,490,0,0"  Height="70" Width="90" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" />
         <Button Command="{Binding CloseWindow}" Margin="576,490,0,0"  Height="70" Width="90" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Закрыть окно"/>
     </Grid>
 </Window>

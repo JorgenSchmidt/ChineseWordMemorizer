@@ -12,7 +12,7 @@ namespace AppModel.DictionaryService
         /// Метод, ожидающий получить на вход путь до существующего файла и возращающий на выход список элементов словаря HSK, 
         /// а так же информацию об успешности выполнения метода, успешно ли он был выполнен и сообщение об ошибке если таковая имела место быть.
         /// </summary>
-        public static OutputListData<DictionaryElement> GetDictionaryFromFile (string FilePath)
+        public static OutputListData<DictionaryElement> GetMainDictionary (string Content)
         {
             OutputListData<DictionaryElement> Result = new OutputListData<DictionaryElement>();
             Result.Data = new List<DictionaryElement> ();
@@ -20,8 +20,7 @@ namespace AppModel.DictionaryService
             Result.IsSucsess = true;
             var counter = 0;
 
-            string fileContent = File.ReadAllText (FilePath);
-            var lines = fileContent.Replace("\r", "").Split('\n');
+            var lines = Content.Replace("\r", "").Split('\n');
             try
             {
                 foreach (var line in lines)
@@ -45,8 +44,7 @@ namespace AppModel.DictionaryService
             {
                 Result.IsSucsess = false;
                 Result.ErrorMessage = "Возникла ошибка на этапе чтения словаря в строке №" + counter + "."
-                    + "\n\nИсключение: " + e.ToString() + "."
-                    + "\n\nПроверьте структуру целевого файла (" + FilePath + ").";
+                    + "\n\nИсключение: " + e.ToString() + ".";
             }
 
             return Result;
@@ -56,16 +54,15 @@ namespace AppModel.DictionaryService
         /// Метод, ожидающий получить на вход путь до существующего файла и возращающий на выход список пользовательских элементов, 
         /// а так же информацию об успешности выполнения метода, успешно ли он был выполнен и сообщение об ошибке если таковая имела место быть.
         /// </summary>
-        public static OutputHashSetData<string> GetUserListFromFile(string FilePath)
+        public static OutputHashSetData<string> GetUsersWordsList(string Content)
         {
             OutputHashSetData<string> Result = new OutputHashSetData<string>();
             Result.Data = new HashSet<string>();   
             Result.ErrorMessage = "";
             Result.IsSucsess = true;
 
-            string fileContent = File.ReadAllText(FilePath);
             var counter = 0;
-            var lines = fileContent.Replace("\r", "").Split('\n');
+            var lines = Content.Replace("\r", "").Split('\n');
 
             try
             {
@@ -84,8 +81,7 @@ namespace AppModel.DictionaryService
             {
                 Result.IsSucsess = false;
                 Result.ErrorMessage = "Возникла ошибка на этапе чтения словаря в строке №" + counter + "."
-                    + "\n\nИсключение: " + e.ToString() + "."
-                    + "\n\nПроверьте структуру целевого файла (" + FilePath + ").";
+                    + "\n\nИсключение: " + e.ToString() + ".";
             }
 
             return Result;
