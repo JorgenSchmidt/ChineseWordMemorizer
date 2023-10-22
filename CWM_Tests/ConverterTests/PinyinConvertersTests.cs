@@ -41,7 +41,7 @@ namespace CWM_Tests.ConverterTests
         [TestMethod]
         public void StandartPinyinToSimpleTest_1()
         {
-            var control = "a1e2i3o4u3u'2";
+            var control = "a1e2i3o4u3v2";
             var changed = PinyinConverters.StandartPinyinToSimple("āéǐòǔǘ");
 
             Assert.AreEqual(true, control.Equals(changed));
@@ -71,6 +71,40 @@ namespace CWM_Tests.ConverterTests
 
             Assert.AreEqual(true, control.Equals(changed));
         }
+
+        [TestMethod]
+        public void SimpleToStandartPinyinTest_1()
+        {
+            var control = "āéǐòǔǘ";
+            var changed = PinyinConverters.SimplifiedPinyinToStandart("a1e2i3o4u3v2");
+
+            Assert.AreEqual(true, control.Equals(changed));
+        }
+        [TestMethod]
+        public void SimpleToStandartPinyinTest_2()
+        {
+            var control = "zhèngzài";
+            var changed = PinyinConverters.SimplifiedPinyinToStandart("zhe4ngza4i");
+
+            Assert.AreEqual(true, control.Equals(changed));
+        }
+        [TestMethod]
+        public void SimpleToStandartPinyinTest_3()
+        {
+            var control = "xiǎoxuéshēng";
+            var changed = PinyinConverters.SimplifiedPinyinToStandart("xia3oxue2she1ng");
+
+            Assert.AreEqual(true, control.Equals(changed));
+        }
+        [TestMethod]
+        public void SimpleToStandartPinyinTest_4()
+        {
+            var control = "méi shénme";
+            var changed = PinyinConverters.SimplifiedPinyinToStandart("me2i she2nme");
+
+            Assert.AreEqual(true, control.Equals(changed));
+        }
+
 
     }
 }

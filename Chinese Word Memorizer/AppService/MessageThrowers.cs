@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using AppModel.DirectoryService;
+using System;
+using System.Windows;
 
 namespace Chinese_Word_Memorizer.AppService
 {
@@ -15,6 +17,13 @@ namespace Chinese_Word_Memorizer.AppService
             var FullMessage = "Возникла ошибка в файле " + FilePath + ".\n\n"
                 + Message;
             MessageBox.Show(FullMessage);
+        }
+
+        public static void ShowUserLists ()
+        {
+            // Запланировано изменение логики к 0.0.1.3 (открывается окно, где в асинхронном режиме проверяются все файлы на валидность)
+            var filelist = DirectoryInfoGetters.GetValideFileList(Environment.CurrentDirectory + @"\WordsLists");
+            MessageBox.Show(filelist);
         }
     }
 }

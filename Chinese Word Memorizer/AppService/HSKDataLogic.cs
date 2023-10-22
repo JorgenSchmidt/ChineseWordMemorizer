@@ -31,7 +31,7 @@ namespace Chinese_Word_Memorizer.AppService
             var Input = DictionaryGetter.GetMainDictionary(Content.Data);
             if (!Input.IsSucsess)
             {
-                MessageThrowers.ShowErrorByFile(Input.ErrorMessage, fileName);
+                MessageThrowers.ShowErrorByFile(Input.Message, fileName);
                 AppData.WindowOpeningIsAllow = false;
                 return;
             }

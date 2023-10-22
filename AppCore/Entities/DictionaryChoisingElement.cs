@@ -9,5 +9,16 @@
     {
         public bool IsChoised { get; set; }
         public bool IsViewed { get; set; }
+
+        public DictionaryChoisingElement() { }
+
+        public DictionaryChoisingElement(string chinese, string russian, string pinyin, bool isChoised, bool isViewed) 
+        { 
+            ChineseWord = chinese;
+            RussianWord = russian;
+            PinyinString = pinyin;
+            IsChoised = isChoised;
+            IsViewed = isViewed;
+        }
     }
 }

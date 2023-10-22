@@ -32,7 +32,28 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 return new Command(
                     obj =>
                     {
+                        if (SearchString == null || SearchString.Length == 0)
+                        {
+                            MessageBox.Show("Введите запрос в строку поиска.");
+                            return;
+                        }
 
+                        var QueryResult = DictionaryGetter.GetSearchedElements(displayedDictionary, SearchString);
+
+                        if (QueryResult.IsSucsess)
+                        {
+                            if (QueryResult.Data.Where(x=> x.IsViewed).Select(x => x).Count() == 0)
+                            {
+                                MessageBox.Show(QueryResult.Message + "\nПопробуйте выполнить другой запрос.");
+                                return;
+                            }
+                            DisplayedDictionary = QueryResult.Data;
+                        }
+
+                        if (QueryResult.Data.Where(x => x.IsViewed).Select(x => x).Count() > 12)
+                        {
+                            MessageBox.Show(QueryResult.Message);
+                        }
                     }    
                 );
             }
@@ -45,13 +66,27 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 return new Command(
                     obj =>
                     {
-
+                        var loc = displayedDictionary;
+                        DisplayedDictionary = DictionaryGetter.GetResetBySearchedViewedList(loc);
                     }
                 );
             }
         }
 
-        private VisibleModes CurrentVisMode = VisibleModes.Center;
+        public TextAlignment currentVisibleMode = TextAlignment.Center;
+
+        public TextAlignment CurrentVisibleMode
+        {
+            get
+            {
+                return currentVisibleMode;
+            }
+            set
+            {
+                currentVisibleMode = value;
+                CheckChanges();
+            }
+        }
 
         public Command ChangeVisibleMode
         {
@@ -60,7 +95,16 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 return new Command(
                     obj =>
                     {
-
+                        if (CurrentVisibleMode == TextAlignment.Center)
+                        {
+                            CurrentVisibleMode = TextAlignment.Left;
+                            return;
+                        }
+                        if (CurrentVisibleMode == TextAlignment.Left)
+                        {
+                            CurrentVisibleMode = TextAlignment.Center;
+                            return;
+                        }
                     }
                 );
             }
@@ -73,7 +117,20 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
         public List<DictionaryChoisingElement>? displayedDictionary = DictionaryGetter.GetViewedList(AppData.MainViewedHSK_Dictionary);
         public List<DictionaryChoisingElement>? DisplayedDictionary
         {
-            get { return displayedDictionary; }
+            get 
+            {
+                var loc = new List<DictionaryChoisingElement>();
+
+                foreach (var element in displayedDictionary)
+                {
+                    if (element.IsViewed)
+                    {
+                        loc.Add(element);
+                    }
+                }
+
+                return loc; 
+            }
             set
             {
                 displayedDictionary = value;
@@ -111,10 +168,15 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                             MessageBox.Show("Такой файл уже существует в директории WordsList.");
                             return;
                         }
-                        var choisedlist = DisplayedDictionary.Where(x => x.IsChoised).Select(x => x.RussianWord).ToList();
+                        var choisedlist = displayedDictionary.Where(x => x.IsChoised).Select(x => x.RussianWord).ToList();
                         if (choisedlist.Count() == 0)
                         {
                             MessageBox.Show("Не выбрано ни одного элемента.");
+                            return;
+                        }
+                        if (choisedlist.Count() < 5)
+                        {
+                            MessageBox.Show("Выберите по меньшей мере 5 элементов.");
                             return;
                         }
                         string content = "";
@@ -128,6 +190,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                             stream.Write(content);
                             stream.Close();
                         }
+                        MessageBox.Show("Файл " + FileName + ".txt успешно создан!");
                     }
                 );
             }
@@ -139,7 +202,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 return new Command(
                     obj =>
                     {
-                        var elements = DisplayedDictionary.Where(x => x.IsChoised == true).Select(x => x.RussianWord);
+                        var elements = displayedDictionary.Where(x => x.IsChoised == true).Select(x => x.RussianWord);
 
                         if (elements.Count() != 0)
                         {
@@ -154,47 +217,8 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                         }
                         else
                         {
-                            MessageBox.Show("Не выбрано ни одного элемента");
+                            MessageBox.Show("Не выбрано ни одного элемента.");
                         }
-                    }
-                );
-            }
-        }
-
-        public Command ResetChoised
-        {
-            get
-            {
-                return new Command(
-                    obj =>
-                    {
-
-                    }
-                );
-            }
-        }
-
-        public Command SortingByPinYin
-        {
-            get
-            {
-                return new Command(
-                    obj =>
-                    {
-
-                    }
-                );
-            }
-        }
-
-        public Command SortingByRussian
-        {
-            get
-            {
-                return new Command(
-                    obj =>
-                    {
-
                     }
                 );
             }
@@ -207,7 +231,78 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 return new Command(
                     obj =>
                     {
+                        MessageThrowers.ShowUserLists();
+                    }
+                );
+            }
+        }
 
+        public Command ResetChoised
+        {
+            get
+            {
+                return new Command(
+                    obj =>
+                    {
+                        var loc = displayedDictionary;
+                        if (loc.Where(x => x.IsChoised).Select(x => x).ToList().Count() == 0)
+                        {
+                            MessageBox.Show("Не выбрано ни одного элемента.");
+                            return;
+                        }
+                        DisplayedDictionary = DictionaryGetter.GetResetByChoisedViewedList(loc);
+                    }
+                );
+            }
+        }
+
+        public bool russianSortingButtonIsEnabled = true;
+        public bool RussianSortingButtonIsEnabled
+        {
+            get { return russianSortingButtonIsEnabled; }
+            set
+            {
+                russianSortingButtonIsEnabled = value;
+                CheckChanges();
+            }
+        }
+        public Command SortingByRussian
+        {
+            get
+            {
+                return new Command(
+                    obj =>
+                    {
+                        var loc = displayedDictionary;
+                        DisplayedDictionary = DictionaryGetter.GetSortedByRussianViewedList(loc);
+                        RussianSortingButtonIsEnabled = false;
+                        PinyinSortingButtonIsEnabled = true;
+                    }
+                );
+            }
+        }
+
+        public bool pinyinSortingButtonIsEnabled = false;
+        public bool PinyinSortingButtonIsEnabled
+        {
+            get { return pinyinSortingButtonIsEnabled;}
+            set
+            {
+                pinyinSortingButtonIsEnabled = value;
+                CheckChanges();
+            }
+        }
+        public Command SortingByPinYin
+        {
+            get
+            {
+                return new Command(
+                    obj =>
+                    {
+                        var loc = displayedDictionary;
+                        DisplayedDictionary = DictionaryGetter.GetSortedByPinYinViewedList(loc);
+                        RussianSortingButtonIsEnabled = true;
+                        PinyinSortingButtonIsEnabled = false;
                     }
                 );
             }
@@ -223,7 +318,26 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 return new Command(
                     obj =>
                     {
-                        string info = "";
+                        string info = "Генеральная инструкция: \n"
+                                    + "Данное окно в основном служит для просмотра имеющейся лексики на данный уровень HSK и составления пользовательских "
+                                    + "словарей. Для этого необходимо отметить галочками все необходимые элементы, "
+                                    + "ввести нужное имя для файла и нажать кнопку подтверждения.\n"
+                                    + "Все словари сохраняются по относительному пути в директории \"WordsLists\".\n\n"
+                                    + "1. Интерфейс данного окна разделён на три сегмента: \n" 
+                                    + "I. Строка поиска с соответствующими инструментами;\n"
+                                    + "II. Отображаемый список;\n"
+                                    + "III. Панель инструментов словаря.\n\n"
+                                    + "2a. Строка поиска поддерживает ввод слов по русским и китайским словам, а так же по транскрипции пиньинь\n"
+                                    + "Транскрипция пиньинь может быть введена как в общепринятой форме, так и в упрощённой (ài --> a4i)\n" 
+                                    + "В более поздних версиях будет выпущена возможность более удобной записи 拼音 (hālóu --> ha1lou2)\n"
+                                    + "2б. При выполнении запроса на поиск лексических единиц можно не беспокоиться за утерю данных о выбранных ранее словах. "
+                                    + "Чтобы проверить какие слова выбраны, можно нажать на кнопку \"Показать выбранные элементы\".\n"
+                                    + "2в. Запрос можно сбросить, чтобы отобразить все остальные элементы. Также можно сразу ввести новый запрос.\n\n"
+                                    + "3а. На основе выбранных слов можно создать файл пользовательского словаря.\n"
+                                    + "3б. Так же чтобы исключить конфликт имён, а так же просмотреть выбранный ранее способ классификации пользовательских "
+                                    + "словарей, можно нажать на кнопку \"Показать пользовательские словари\".\n "
+                                    + "3в. Список выбранных слов можно сбросить до изначального состояния "
+                                    + "(те которые предназначаются для добавления в пользовательский словарь).";
 
                         MessageBox.Show(info);
                     }    
@@ -247,11 +361,5 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
         }
         #endregion
 
-    }
-
-    public enum VisibleModes
-    {
-        Center,
-        Left
     }
 }

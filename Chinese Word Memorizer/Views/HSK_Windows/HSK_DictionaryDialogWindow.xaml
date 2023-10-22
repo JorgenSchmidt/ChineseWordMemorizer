@@ -25,6 +25,7 @@
         <Button Command="{Binding ChangeVisibleMode}" Margin="725,45,0,0"  Height="25" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Изменить режим отображения словаря" />
 
         <!--Список-->
+        
         <ListView ItemsSource="{Binding DisplayedDictionary}" Margin="0,90,0,0" Height="450" Width="950" HorizontalAlignment="Center" VerticalAlignment="Top">
             <ListView.View>
                 <GridView>
@@ -79,17 +80,17 @@
         <Button Command="{Binding ShowChoisedElements}" Margin="-220,600,0,0"  Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
             <TextBlock TextAlignment="Center" FontSize="10"> Показать выбранные <LineBreak/> элементы </TextBlock>
         </Button>
-        <Button Command="{Binding ResetChoised}" Margin="40,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <Button Command="{Binding ShowAllUsersLists}" Margin="40,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock TextAlignment="Center" FontSize="10"> Показать все <LineBreak/> пользовательские <LineBreak/> словари</TextBlock>
+        </Button>
+        <Button Command="{Binding ResetChoised}" Margin="300,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
             <TextBlock TextAlignment="Center" FontSize="10"> Сбросить выбранное <LineBreak/> к изначальному <LineBreak/> состоянию</TextBlock>
         </Button>
-        <Button Command="{Binding SortingByPinYin}" Margin="300,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <TextBlock TextAlignment="Center" FontSize="10"> Сортировать по 拼音 </TextBlock>
+        <Button Command="{Binding SortingByRussian}" IsEnabled="{Binding RussianSortingButtonIsEnabled}" Margin="560,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock TextAlignment="Center" FontSize="10"> Сортировать по <LineBreak/> русскому алфавиту</TextBlock>
         </Button>
-        <Button Command="{Binding SortingByRussian}" Margin="560,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <TextBlock TextAlignment="Center" FontSize="10"> Сортировать по <LineBreak/> русскому алфавиту </TextBlock>
-        </Button>
-        <Button Command="{Binding ShowAllUsersLists}" Margin="820,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <TextBlock TextAlignment="Center" FontSize="10"> Показать все <LineBreak/> пользовательские <LineBreak/> словари </TextBlock>
+        <Button Command="{Binding SortingByPinYin}" IsEnabled="{Binding PinyinSortingButtonIsEnabled}" Margin="820,600,0,0" Height="45" Width="110" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock TextAlignment="Center" FontSize="10"> Сортировать по 拼音</TextBlock>
         </Button>
 
         <!--Другое-->

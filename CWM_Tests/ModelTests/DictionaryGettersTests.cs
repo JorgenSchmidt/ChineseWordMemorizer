@@ -180,7 +180,7 @@ namespace CWM_Tests.ModelTests
 
             var methAns = DictionaryGetter.GetElementsByUserList(UserData, InitialData);
 
-            Assert.AreEqual("", methAns.ErrorMessage);
+            Assert.AreEqual("", methAns.Message);
         }
 
         [TestMethod]
@@ -354,7 +354,7 @@ namespace CWM_Tests.ModelTests
 
             var methAns = DictionaryGetter.GetElementsByUserList(UserData, InitialData);
 
-            Assert.AreEqual("Ошибка в строке #" + 3 + ". Обнаружен элемент пользовательского списка, которого нет в словаре.", methAns.ErrorMessage);
+            Assert.AreEqual("Ошибка в строке #" + 3 + ". Обнаружен элемент пользовательского списка, которого нет в словаре.", methAns.Message);
         }
 
         #endregion

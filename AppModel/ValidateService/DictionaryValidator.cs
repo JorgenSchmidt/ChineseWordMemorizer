@@ -16,10 +16,15 @@ namespace AppModel.ValidateService
         {
             ValideData Message = new ValideData ();
             Message.IsValide = true;
+
+            // Считает количество уже пройденных элементов (в случае возникновения ошибки покажет в какой строке есть ошибка)
             var counter = 0;
+
+            // Считает количество ошибок, в случае если их оказалось больше 20 - цикл прекращается 
             var errorcounter = 0;
             var maxerror = 20;
 
+            // Начало перебора элементов входного словаря, вывод ошибок проводится по каждому элементу DictionaryElement
             foreach (var element in InputDictionary)
             {
                 counter++ ;
@@ -59,21 +64,39 @@ namespace AppModel.ValidateService
         /// 1. Контент содержит только кириллические символы;
         /// 2. Элементы словаря должны быть разделены переносом строки.
         /// </summary>
-        public static ValideData UserListIsCorrect (HashSet<string> dict)
+        public static ValideData UserListIsCorrect (HashSet<string> InputUserList)
         {
             ValideData Message = new ValideData ();
             Message.IsValide = true;
             var counter = 0;
 
-            foreach (var currentString in dict)
+            // Считает количество ошибок, в случае если их оказалось больше 20 - цикл прекращается 
+            var errorcounter = 0;
+            var maxerror = 20;
+
+            // Перебор входного пользовательского словаря
+            foreach (var currentString in InputUserList)
             {
                 counter++;
+
                 if (!IsCyrrilicWord(currentString))
                 {
+                    errorcounter++;
                     Message.IsValide = false;
-                    Message.Message = "\nОшибка в строке #" + counter + " (пользовательский файл). Проверьте файл на соответствие требованиям.\n"
-                        + "Файл должен содержать кириллические слова, разделённые переносом строки (наличие табуляции в любой строке воспринимается как ошибка)";
+                    Message.Message += "Ошибка в строке #" + counter + " (пользовательский файл).\n";
                 }
+
+                if (errorcounter == maxerror)
+                {
+                    Message.Message += "\nНакопилось " + maxerror + " ошибок в пользовательском словаре.\n\n";
+                    break;
+                }
+            }
+
+            if (!Message.IsValide)
+            {
+                Message.Message = "Проверьте файл на соответствие требованиям.\n"
+                    + "Файл должен содержать кириллические слова, разделённые переносом строки (наличие табуляции в любой строке воспринимается как ошибка)";
             }
 
             return Message;

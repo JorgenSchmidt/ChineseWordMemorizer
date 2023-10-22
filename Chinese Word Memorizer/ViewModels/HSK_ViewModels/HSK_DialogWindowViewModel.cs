@@ -3,7 +3,6 @@ using AppCore.Responses;
 using AppModel.ChekerService;
 using AppModel.ConverterService;
 using AppModel.DictionaryService;
-using AppModel.DirectoryService;
 using AppModel.FileService;
 using AppModel.ValidateService;
 using Chinese_Word_Memorizer.AppService;
@@ -389,21 +388,28 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                     {
                         string Message = "Инструкция:\n"
                         + "1а. Файл с пользовательскими словами должен находится в папке WordsLists и иметь расширение .txt\n"
-                        + "1б. Также список слов должен состоять из русских слов, разделённых переносом строки, обязательно имеющихся в выбранном словаре\n\n"
+                        + "1б. Также список слов должен состоять из русских слов, разделённых переносом строки, обязательно имеющихся в выбранном словаре.\n"
+                        + "1в. При выборе нужного пользовательского листа название расширения не пишется, программа всё сделает за Вас.\n\n"
                         + "2а. Для начала тестирования необходимо сначала выбрать нужный режим тестирования (о чём будет рассказано далее), "
-                        + "затем ввести имя файла и нажать на кнопку Начать. В случае если приложение выдаёт ошибку - необходимо проверить "
+                        + "затем ввести имя файла и нажать на кнопку \"Начать\". В случае если приложение выдаёт ошибку - необходимо проверить "
                         + "существует файл с указанным именем и если такой существует - проверить файл на соответствие с требованиями из пункта \"1б\".\n"
                         + "2б. После начала тестирования кнопки выбора режима тестирования будут отключены!!!\n"
                         + "2в. Для как можно более продуктивной работы необходимо на усмотрение пользователя разбить словарь на части и давать файлам имена по"
-                        + "следующему принципу (пример будет приближённый, название файлов остаётся на усмотрение пользователя): \n"
+                        + "примерно (!) следующему принципу (пример будет приближённый, название файлов остаётся на усмотрение пользователя): \n"
                         + "<Номер HSK> - <Номер части>, пример \"hsk1-1\".\n\n"
                         + "3а. Возможно включать различные режимы тестирования: знание русского, китайского перевода, знание 拼音\n"
-                        + "3б. При любом из режимов, необходимо ввести в поля элементы, соответствующие выведенному в зелёной рамке слову\\транскрипции\n"
+                        + "3б. При тестировании в любом из режимов, необходимо ввести в поля элементы, соответствующие выведенному в зелёной рамке слову\\транскрипции\n"
                         + "3в. В случае если нет доступа к особым символам, использующихся в транскрипции Пиньинь, можно вводить слова по следующему принципу:\n"
-                        + "после каждой гласной, имеющей тон, необходимо ввести после самой гласной её номер, например zhèngzài --> zhe4ngza4i\n\n"
-                        + "4а. До начала тестирования приложением предусматривается возможность просмотра выбранного пользователем словарём, после запуска тестирования, "
-                        + "кнопка просмотра словаря будет отключена.\n"
-                        + "4б. В окне просмотра словаря можно так же составить список слов для изучения (с обязательным указанием имени выходного файла).";
+                        + "после каждой гласной, имеющей тон, необходимо ввести после самой гласной её номер, например zhèngzài --> zhe4ngza4i\n"
+                        + "Вариант ввода транскрипции по принципу zhèngzài --> zheng4zai4 будет добавлен в версии 0.0.1.4\n\n"
+                        + "4а. До начала тестирования приложением предусматривается возможность просмотра выбранного пользователем словарём, "
+                        + "после запуска тестирования, кнопка просмотра словаря будет отключена.\n"
+                        + "4б. В окне просмотра словаря можно так же составить список слов для изучения (с обязательным указанием имени выходного файла)."
+                        + "Более подробную инструкцию насчёт окна просмотра словаря можно будет получить по специальной кнопке в самом окне.\n\n"
+                        + "5а. В случае, если был включен режим тестирования на знание перевода китайских слов, может появиться запись по типу \"的 t4\". "
+                        + "Такая запись появляется, когда в генеральном словаре есть несколько китайских иероглифов с разными тонами, "
+                        + "и в данном случае цифры, идущие после буквы t обозначают тон иероглифов. "
+                        + "Данная функция была включена для того, чтобы пользователь понимал по какому конкретно значению иероглифа его \"спрашивает\" приложение.";
 
                         MessageBox.Show(Message);
                     }
@@ -419,9 +425,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 return new Command(
                     obj =>
                     {
-                        // Запланировано изменение логики к 0.0.1.3 (открывается окно, где в асинхронном режиме проверяются все файлы на валидность)
-                        var filelist = DirectoryInfoGetters.GetValideFileList(Environment.CurrentDirectory + @"\WordsLists");
-                        MessageBox.Show(filelist);
+                        MessageThrowers.ShowUserLists();
                     }
                 );
             }
@@ -492,7 +496,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                             UsersListElementsCount = CurrentWindowWordsListObject.Data.Count;
                             if (!CurrentWindowWordsListObject.IsSucsess)
                             {
-                                MessageThrowers.ShowErrorByFile(CurrentWindowWordsListObject.ErrorMessage, RelativeFilePath);
+                                MessageThrowers.ShowErrorByFile(CurrentWindowWordsListObject.Message, RelativeFilePath);
                                 return;
                             }
 
@@ -558,19 +562,16 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
                 {
                     case SwitchModes.RussianMode:
                         MainQuizWord = RussianWord;
-                        break;
+                    break;
 
                     case SwitchModes.ChineseMode:
-
-                        // Изменить логику работы до 0.0.1.3
                         var changedChineseWord = StringGetterWithDicts.GetChangeStringByDefaultList(ChineseWord, RussianWord, AppData.MainHSK_Dictionary); 
-
                         MainQuizWord = changedChineseWord;
-                        break;
+                    break;
 
                     case SwitchModes.PinyinMode:
                         MainQuizWord = Pinyin;
-                        break;
+                    break;
                 }
             }
             catch (Exception ex)
@@ -620,7 +621,7 @@ namespace Chinese_Word_Memorizer.ViewModels.HSK_ViewModels
             UsersListElementsCount = 0;
             CurrentWindowWordsListObject.Data.Clear();
             CurrentWindowWordsListObject.IsSucsess = false;
-            CurrentWindowWordsListObject.ErrorMessage = "";
+            CurrentWindowWordsListObject.Message = "";
         }
         #endregion
     }

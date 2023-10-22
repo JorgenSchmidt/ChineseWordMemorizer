@@ -12,16 +12,19 @@ namespace AppModel.DictionaryService
         /// Если из дефолтного словаря есть 2 и более вхождений по русскому слову, возвращает изменённую строку для китайской записи с указанием тона.
         /// Это связано с тем, что некоторые китайские иероглифы могут иметь несколько вариантов их произношения (по тонам).
         /// </summary>
-        public static string GetChangeStringByDefaultList (    string chineseInp, // Изменить логику работы до 0.0.1.3
+        public static string GetChangeStringByDefaultList (    string chineseInp,
                                                                string russianInp, 
                                                                List<DictionaryElement> defaultDict
                                                           ) 
         {
             string Result = chineseInp;
-
             var chineseEntries = new List<DictionaryElement>();
+
+            // Запрос на получение всех прямых вхождений по китайскому слову из входного словаря
             chineseEntries = defaultDict.Where(x => x.ChineseWord.Equals(chineseInp)).Select(x => x).ToList();
 
+            // Если обнаружен всего один элемент по запросу на получение прямых вхождений, на возврат идёт входная строка без каких-либо изменений
+            // В противном случае строка преобразуется по формату "[иероглиф] t[все обнаруженные тона]" 
             if (chineseEntries.Count == 1)
             {
                 return Result;
@@ -40,10 +43,13 @@ namespace AppModel.DictionaryService
                             {
                                 for (int internalCounter = 0; internalCounter <= 5; internalCounter++)
                                 {
-                                    var currentMassive = PinYinConstants.PinYinVowels[externalCounter];
+                                    var currentMassive = PinYinConstants.PinYinVowels_Tones[externalCounter];
                                     if (symbol == currentMassive[internalCounter])
                                     {
-                                        toneNumber += externalCounter.ToString();
+                                        if (externalCounter != 0)
+                                        {
+                                            toneNumber += externalCounter.ToString();
+                                        }
                                         vowelWasFinded = true;
                                         break;
                                     }
@@ -54,7 +60,10 @@ namespace AppModel.DictionaryService
                                 }
                             }
                         }
-                        Result += " t" + toneNumber;
+                        if (toneNumber.Length != 0)
+                        {
+                            Result += " t" + toneNumber;
+                        }
                     }
                 }
             }
